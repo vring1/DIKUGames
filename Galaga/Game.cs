@@ -139,14 +139,17 @@ namespace Galaga {
 
                 if (shot.Shape.Position.Y > 1) {
                     shot.DeleteEntity();
-                    shot.IsDeleted();
 
                 } 
-
                 else {
                     enemies.Iterate(enemy => {
-                        CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape);
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision){
+                            shot.DeleteEntity();
+                            enemy.DeleteEntity();
+                            AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                        }
                         // If collision; shot and enemy -> delete both
+                        
 
                     });
 
@@ -169,3 +172,4 @@ namespace Galaga {
 
     }
 }
+
