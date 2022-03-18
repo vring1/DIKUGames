@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Collections.Generic;
 //using DIKUArcade.EventBus;
 using DIKUArcade.Events;
+using Galaga.Squadron; 
 
 namespace Galaga {
     public class Game : DIKUGame, IGameEventProcessor //DIKUGame 
@@ -17,10 +18,14 @@ namespace Galaga {
         private EntityContainer<Enemy> enemies;
         private Player player;
         private GameEventBus eventBus;
-        private EntityContainer<PlayerShot> playerShots;
-        private IBaseImage playerShotImage;
         private AnimationContainer enemyExplosions;
         private List<Image> explosionStrides;
+        public EntityContainer<PlayerShot> playerShots;
+        public IBaseImage playerShotImage;
+        public List<Image> enemyStridesGreen;
+        public List<Image> enemyStridesRed;
+        
+        
         private const int EXPLOSION_LENGTH_MS = 500;
 
         public Game(WindowArgs windowArgs) : base(windowArgs) {
@@ -36,6 +41,7 @@ namespace Galaga {
             window.SetKeyEventHandler(KeyHandler);
 
             eventBus.Subscribe(GameEventType.InputEvent, this);
+            eventBus.Subscribe(GameEventType.InputEvent, player);
 
             var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
             const int numEnemies = 8;
@@ -43,14 +49,30 @@ namespace Galaga {
             for (int i = 0; i < numEnemies; i++) {
                 enemies.AddEntity(new Enemy(
                     new DynamicShape(new Vec2F(0.1f + (float) i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                    new ImageStride(80, images)));
+                    new ImageStride(80, images)
+                    ));
             }
+            const int numberOfEnemies = 8;
+            enemyExplosions = new AnimationContainer(numberOfEnemies);
+            explosionStrides = ImageStride.CreateStrides(8,
+                Path.Combine("Assets", "Images", "Explosion.png"));
+
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
-            enemyExplosions = new AnimationContainer(numEnemies);
-            explosionStrides = ImageStride.CreateStrides(8,
-                Path.Combine("Assets", "Images", "Explosion.png"));
+            enemyStridesGreen = ImageStride.CreateStrides(2, Path.Combine("Assets",
+            "Images", "GreenMonster.png"));
+            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
+            "Images", "RedMonster.png"));
+            //var enemyStridesBlue = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+
+
+
+            //var Squadron1 = new HeartSquadron(enemies, 8);
+            //Squadron1.CreateEnemies(images, enemyStridesGreen);
+            //Squadron1.CreateEnemies();
+            //Squadron1.Enemies.RenderEntities(); 
+            
 
         }
 
@@ -64,13 +86,12 @@ namespace Galaga {
         }
 
 
-
         public override void Render() {
             player.Render();
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
-
+            //Squadron1.Enemies.RednerEntities();
         }
 
         public override void Update() {
@@ -81,49 +102,68 @@ namespace Galaga {
             IterateShots();
         }
 
+        
+        
         public void KeyPress(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
-                    player.SetMoveLeft(true);
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Move_Left"
+                    });
                     break;
                 case KeyboardKey.Right:
-                    player.SetMoveRight(true);
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Move_Right"
+                    });
                     break;
                 default:
-                    System.Console.WriteLine("You are stupid");
                     break;
 
             }
         }
+        
         public void KeyRelease(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
-                    player.SetMoveLeft(false);
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Release_Left"
+                    });
                     break;
                 case KeyboardKey.Right:
-                    player.SetMoveRight(false);
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Release_Right"
+                    });
                     break;
                 case KeyboardKey.Escape:
-                    window.CloseWindow();
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Release_Escape"
+                    });
                     break;
                 case KeyboardKey.Space:
-                    Image powImg = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-                    DynamicShape shotShape = new DynamicShape(player.GetPosition(), PlayerShot.extent, PlayerShot.direction);
-                    PlayerShot playerShot = new PlayerShot(shotShape, powImg);
-                    playerShots.AddEntity(playerShot);
+                    eventBus.RegisterEvent (new GameEvent{
+                        EventType = GameEventType.InputEvent, Message = "Release_Space"
+                    });
                     break;
                 //Create new shot and add to container 
 
                 default:
-                    System.Console.WriteLine("You are stupid");
                     break;
 
             }
         }
+
         public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.EventType == GameEventType.WindowEvent) {
+            if (gameEvent.EventType == GameEventType.InputEvent) {
                 switch (gameEvent.Message) {
-                    // Not implemented
+                    case "Release_Escape":
+                        window.CloseWindow();
+                        break;
+                    case "Release_Space":
+                        Image powImg = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+                        DynamicShape shotShape = new DynamicShape(player.GetPosition(), PlayerShot.extent, PlayerShot.direction);
+                        PlayerShot playerShot = new PlayerShot(shotShape, powImg);
+                        playerShots.AddEntity(playerShot);
+                        break;
                     default:
                         break;
                 }
@@ -144,12 +184,23 @@ namespace Galaga {
                 else {
                     enemies.Iterate(enemy => {
                         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision){
-                            shot.DeleteEntity();
-                            enemy.DeleteEntity();
-                            AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                            
+                            if (enemy.HitPoints <= 0){
+                                shot.DeleteEntity();
+                                enemy.DeleteEntity();
+                                AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                            }
+                            else if (enemy.HitPoints > 40){
+                                enemy.HitPoints -= 30;
+                                ImageStride turnGreen = new ImageStride(8,enemyStridesGreen);
+                                enemy.Image = turnGreen;
+                            }    
+                            else{
+                                enemy.HitPoints -= 30;
+                                ImageStride turnRed = new ImageStride(8,enemyStridesRed);
+                                enemy.Image = turnRed;
+                            }
                         }
-                        // If collision; shot and enemy -> delete both
-                        
 
                     });
 
