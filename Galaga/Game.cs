@@ -150,24 +150,40 @@ namespace Galaga {
                 zigZagDown.MoveEnemies(enemies);
             }
         }
-        public void GameOver(){
+        /*public void DeleteAllEntities(){
             enemies.Iterate(enemy => {
-                if (enemy.IsAtBottomOfScreen()){
-                    enemy.DeleteEntity();
+                if (enemy.IsAtBottom()){
+                    foreach (Enemy elem in enemies){
+                        elem.DeleteEntity();  
+
+                    }
+                    
+                    
                 }
-            });
+            }); 
+        }*/
+        public bool GameOver(){
+            //DeleteAllEntities();
+            foreach (Enemy elem in enemies){
+                if (elem.IsAtBottom()){
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override void Render() {
-            player.Render();
-            if (enemies.CountEntities() == 0){
+            if (GameOver() == false){
+                player.Render();
+                enemies.RenderEntities();
+                playerShots.RenderEntities();
+                enemyExplosions.RenderAnimations();
+                if (enemies.CountEntities() == 0){
                 NewWave();
                 NewSpeed();
             }
+            }
             DifferentMoves();
-            enemies.RenderEntities();
-            playerShots.RenderEntities();
-            enemyExplosions.RenderAnimations();
             score.RenderScore();
 
         }
