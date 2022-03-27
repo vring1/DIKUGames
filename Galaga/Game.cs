@@ -11,6 +11,8 @@ using System.Collections.Generic;
 //using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using Galaga.Squadron; 
+using Galaga.MovementStrategy; 
+using System;
 
 namespace Galaga {
     public class Game : DIKUGame, IGameEventProcessor //DIKUGame 
@@ -22,9 +24,17 @@ namespace Galaga {
         private List<Image> explosionStrides;
         public EntityContainer<PlayerShot> playerShots;
         public IBaseImage playerShotImage;
-        public List<Image> enemyStridesGreen;
         public List<Image> enemyStridesRed;
-        
+        private MoveDown moveDown;      
+        private NoMove noMove;  
+        private ZigZagDown zigZagDown;
+        private Score score;
+        private static Random rnd = new Random();
+        private int snd = rnd.Next(3);
+        private ISquadron squadron1;
+        private ISquadron squadron2;
+        private ISquadron squadron3;
+
         
         private const int EXPLOSION_LENGTH_MS = 500;
 
@@ -43,15 +53,17 @@ namespace Galaga {
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.InputEvent, player);
 
-            var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            const int numEnemies = 8;
-            enemies = new EntityContainer<Enemy>(numEnemies);
-            for (int i = 0; i < numEnemies; i++) {
+            
+            //const int numEnemies = 8;
+            //enemies = new EntityContainer<Enemy>(numEnemies);
+            /*for (int i = 0; i < numEnemies; i++) {
                 enemies.AddEntity(new Enemy(
                     new DynamicShape(new Vec2F(0.1f + (float) i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                    new ImageStride(80, images)
+                    new ImageStride(80, images), new ImageStride(80,enemyStridesGreen)
                     ));
-            }
+            }*/
+
+
             const int numberOfEnemies = 8;
             enemyExplosions = new AnimationContainer(numberOfEnemies);
             explosionStrides = ImageStride.CreateStrides(8,
@@ -59,21 +71,44 @@ namespace Galaga {
 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-
-            enemyStridesGreen = ImageStride.CreateStrides(2, Path.Combine("Assets",
-            "Images", "GreenMonster.png"));
-            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
-            "Images", "RedMonster.png"));
+            
             //var enemyStridesBlue = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
+            enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
+            "Images", "RedMonster.png"));
 
-
-            //var Squadron1 = new HeartSquadron(enemies, 8);
-            //Squadron1.CreateEnemies(images, enemyStridesGreen);
-            //Squadron1.CreateEnemies();
-            //Squadron1.Enemies.RenderEntities(); 
+            squadron1 = new LineSquadron();
+            
+            
+            squadron2 = new ZigZagSquadron();
             
 
+            squadron3 = new DobbeltFatSquadron();
+            
+            
+            moveDown = new MoveDown();
+            noMove = new NoMove();
+            zigZagDown = new ZigZagDown();
+
+            score = new Score(new Vec2F(0.85f,0.5f), new Vec2F(0.5f,0.5f));
+
+            if (snd == 0){
+                enemies = squadron3.Enemies;
+            }
+            if (snd == 1){
+                enemies = squadron2.Enemies;
+            }
+            if (snd == 2){
+                enemies = squadron1.Enemies;
+            }
+            
+            
+        }
+
+        public void NewSpeed(){
+            foreach (Enemy elem in enemies){
+                elem.Speed = elem.Speed + 0.002f;
+            }
         }
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
@@ -84,22 +119,64 @@ namespace Galaga {
                 KeyRelease(key);
             }
         }
-
+        public void NewWave(){
+            var a = rnd.Next(3);
+            List<Image> blueMonster = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            switch(a){
+                case 0:
+                    enemies = squadron1.Enemies;
+                    squadron1.CreateEnemies(blueMonster, enemyStridesRed);
+                    break;
+                case 1:
+                    enemies = squadron2.Enemies;
+                    squadron2.CreateEnemies(blueMonster,enemyStridesRed);
+                    break;
+                case 2:
+                    enemies = squadron3.Enemies;
+                    squadron3.CreateEnemies(blueMonster,enemyStridesRed);
+                    break;
+                }
+            
+        }
+        public void DifferentMoves(){
+            var a = rnd.Next(3);
+            if (a == 0){
+                moveDown.MoveEnemies(enemies);
+            }
+            if (a == 1){
+                noMove.MoveEnemies(enemies);
+            }
+            if (a == 2){
+                zigZagDown.MoveEnemies(enemies);
+            }
+        }
+        public void GameOver(){
+            enemies.Iterate(enemy => {
+                if (enemy.IsAtBottomOfScreen()){
+                    enemy.DeleteEntity();
+                }
+            });
+        }
 
         public override void Render() {
             player.Render();
+            if (enemies.CountEntities() == 0){
+                NewWave();
+                NewSpeed();
+            }
+            DifferentMoves();
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
-            //Squadron1.Enemies.RednerEntities();
+            score.RenderScore();
+
         }
 
         public override void Update() {
-            window.PollEvents();
-            window.Clear();
             eventBus.ProcessEventsSequentially();
             player.Move();
             IterateShots();
+            score.UpdateScore();
         }
 
         
@@ -184,30 +261,23 @@ namespace Galaga {
                 else {
                     enemies.Iterate(enemy => {
                         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision){
-                            
+                            enemy.HitPoints -= 40;
                             if (enemy.HitPoints <= 0){
                                 shot.DeleteEntity();
                                 enemy.DeleteEntity();
                                 AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
-                            }
-                            else if (enemy.HitPoints > 40){
-                                enemy.HitPoints -= 30;
-                                ImageStride turnGreen = new ImageStride(8,enemyStridesGreen);
-                                enemy.Image = turnGreen;
-                            }    
-                            else{
-                                enemy.HitPoints -= 30;
+                                score.AddPoints();
+                            }   
+                            else if (enemy.IsShot()){
                                 ImageStride turnRed = new ImageStride(8,enemyStridesRed);
                                 enemy.Image = turnRed;
                             }
+                            
                         }
 
                     });
 
                 }
-
-
-
             });
 
         }
@@ -219,8 +289,6 @@ namespace Galaga {
             enemyExplosions.AddAnimation(statShape, EXPLOSION_LENGTH_MS, imgStride);
 
         }
-
-
     }
 }
 

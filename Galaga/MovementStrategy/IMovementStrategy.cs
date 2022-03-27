@@ -1,4 +1,3 @@
-using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using System.IO;
@@ -11,11 +10,9 @@ using System.Collections.Generic;
 //using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 
-
-namespace Galaga.Squadron {
-    public interface ISquadron {
-        EntityContainer<Enemy> Enemies {get;}
-        int MaxEnemies {get;}
-        void CreateEnemies (List<Image> enemyStride, List<Image> alternativeEnemyStride);
+namespace Galaga.MovementStrategy {
+public interface IMovementStrategy {
+    void MoveEnemy (Enemy enemy);
+    void MoveEnemies (EntityContainer<Enemy> enemies);
 }
 }

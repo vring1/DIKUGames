@@ -11,30 +11,29 @@ using System.Collections.Generic;
 //using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using Galaga.Squadron; 
+using Galaga.MovementStrategy;
 
 
-namespace Galaga {
-    public class HeartSquadron : ISquadron {
+namespace Galaga.Squadron {
+    public class LineSquadron : ISquadron {
 
         public EntityContainer<Enemy> Enemies {get;}
         public int MaxEnemies {get;}
-    
-    
 
-        public HeartSquadron (EntityContainer<Enemy> Enemies, int MaxEnemies) {
-            Enemies = this.Enemies;
-            MaxEnemies = this.MaxEnemies;
+    
+        public LineSquadron () {
+            MaxEnemies = 8;
+            Enemies = new EntityContainer<Enemy>(MaxEnemies);
         }
         
         public void CreateEnemies (List<Image> enemyStride,
-        List<Image> alternativeEnemyStride){
+            List<Image> alternativeEnemyStride){
             //var images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            const int numEnemies = 8;
-            for (int i = 0; i < numEnemies; i++) {
+            for (int i = 0; i < MaxEnemies; i++) {
                 Enemies.AddEntity(new Enemy(
-                    new DynamicShape(new Vec2F(0.5f + (float) i * 0.4f, 0.3f), new Vec2F(0.6f, 0.8f)),
-                    new ImageStride(80, enemyStride)/*, new ImageStride(80,alternativeEnemyStride)*/
-                    ));
+                    new DynamicShape(new Vec2F(0.1f + (float) i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+                    new ImageStride(80, enemyStride), new ImageStride(80,alternativeEnemyStride), 0.0f
+                ));
             }
             
         }
