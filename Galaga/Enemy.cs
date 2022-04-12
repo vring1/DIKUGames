@@ -54,7 +54,7 @@ namespace Galaga {
             
         }
 
-        public bool IsAtBottom(){
+        public bool IsAtBottomOfScreen(){
             if (this.Shape.Position.Y <= 0.1){
                 return true;
             }
