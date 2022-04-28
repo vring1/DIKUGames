@@ -1,7 +1,7 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Input; 
+using DIKUArcade.Input;
 using System.IO;
 using DIKUArcade.Physics;
 using System.Security.Principal;
@@ -16,29 +16,24 @@ using DIKUArcade.GUI;
 
 namespace Galaga {
     public class Player : IGameEventProcessor {
-        
+
         float moveLeft = 0.0f;
         float moveRight = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
         private Entity entity;
         private DynamicShape shape;
-        
-        
+
+
 
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
-
-            
-            
         }
 
         private void UpdateDirection() {
-
             this.shape.Direction.X = moveRight + moveLeft;
-
         }
-        
+
 
         public void Move() {
             if (this.shape.Position.X <= 0) {
@@ -69,7 +64,6 @@ namespace Galaga {
                 this.moveRight = 0.0f;
             }
             UpdateDirection();
-
 
             // TODO:set moveRight appropriately and call UpdateMovement()
         }

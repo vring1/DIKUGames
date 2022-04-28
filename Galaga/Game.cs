@@ -10,8 +10,8 @@ using System.Security.Principal;
 using System.Collections.Generic;
 //using DIKUArcade.EventBus;
 using DIKUArcade.Events;
-using Galaga.Squadron; 
-using Galaga.MovementStrategy; 
+using Galaga.Squadron;
+using Galaga.MovementStrategy;
 using System;
 
 namespace Galaga {
@@ -25,8 +25,8 @@ namespace Galaga {
         public EntityContainer<PlayerShot> playerShots;
         public IBaseImage playerShotImage;
         public List<Image> enemyStridesRed;
-        private MoveDown moveDown;      
-        private NoMove noMove;  
+        private MoveDown moveDown;
+        private NoMove noMove;
         private ZigZagDown zigZagDown;
         private Score score;
         private static Random rnd = new Random();
@@ -35,7 +35,7 @@ namespace Galaga {
         private ISquadron squadron2;
         private ISquadron squadron3;
         private const int EXPLOSION_LENGTH_MS = 500;
-        private StateMachine stateMachine = new StateMachine(); 
+        private StateMachine stateMachine = new StateMachine();
 
         public Game(WindowArgs windowArgs) : base(windowArgs) {
             System.Console.WriteLine("START");
@@ -46,10 +46,8 @@ namespace Galaga {
             //SetKeyHandler();
 
             eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent }); 
-
+            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
             window.SetKeyEventHandler(KeyHandler);
-
             eventBus.Subscribe(GameEventType.InputEvent, this);
             eventBus.Subscribe(GameEventType.InputEvent, player);
 
@@ -61,42 +59,42 @@ namespace Galaga {
 
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-            
+
             //var enemyStridesBlue = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
             "Images", "RedMonster.png"));
 
             squadron1 = new LineSquadron();
-            
-            
+
+
             squadron2 = new ZigZagSquadron();
-            
+
 
             squadron3 = new DobbeltFatSquadron();
-            
-            
+
+
             moveDown = new MoveDown();
             noMove = new NoMove();
             zigZagDown = new ZigZagDown();
 
-            score = new Score(new Vec2F(0.85f,0.5f), new Vec2F(0.5f,0.5f));
+            score = new Score(new Vec2F(0.85f, 0.5f), new Vec2F(0.5f, 0.5f));
 
-            if (snd == 0){
+            if (snd == 0) {
                 enemies = squadron3.Enemies;
             }
-            if (snd == 1){
+            if (snd == 1) {
                 enemies = squadron2.Enemies;
             }
-            if (snd == 2){
+            if (snd == 2) {
                 enemies = squadron1.Enemies;
             }
-            
+
             System.Console.WriteLine("FÆRDIG");
         }
 
-        public void NewSpeed(){
-            foreach (Enemy elem in enemies){
+        public void NewSpeed() {
+            foreach (Enemy elem in enemies) {
                 elem.Speed = elem.Speed + 0.002f;
             }
         }
@@ -109,34 +107,35 @@ namespace Galaga {
                 KeyRelease(key);
             }
         }
-        public void NewWave(){
+
+        public void NewWave() {
             var a = rnd.Next(3);
             List<Image> blueMonster = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            switch(a){
+            switch (a) {
                 case 0:
                     enemies = squadron1.Enemies;
                     squadron1.CreateEnemies(blueMonster, enemyStridesRed);
                     break;
                 case 1:
                     enemies = squadron2.Enemies;
-                    squadron2.CreateEnemies(blueMonster,enemyStridesRed);
+                    squadron2.CreateEnemies(blueMonster, enemyStridesRed);
                     break;
                 case 2:
                     enemies = squadron3.Enemies;
-                    squadron3.CreateEnemies(blueMonster,enemyStridesRed);
+                    squadron3.CreateEnemies(blueMonster, enemyStridesRed);
                     break;
-                }
-            
+            }
+
         }
-        public void DifferentMoves(){
+        public void DifferentMoves() {
             var a = rnd.Next(3);
-            if (a == 0){
+            if (a == 0) {
                 moveDown.MoveEnemies(enemies);
             }
-            if (a == 1){
+            if (a == 1) {
                 noMove.MoveEnemies(enemies);
             }
-            if (a == 2){
+            if (a == 2) {
                 zigZagDown.MoveEnemies(enemies);
             }
         }
@@ -152,10 +151,10 @@ namespace Galaga {
                 }
             }); 
         }*/
-        public bool GameOver(){
+        public bool GameOver() {
             //DeleteAllEntities();
-            foreach (Enemy elem in enemies){
-                if (elem.IsAtBottomOfScreen()){
+            foreach (Enemy elem in enemies) {
+                if (elem.IsAtBottomOfScreen()) {
                     return true;
                 }
             }
@@ -163,15 +162,15 @@ namespace Galaga {
         }
 
         public override void Render() {
-            if (GameOver() == false){
+            if (GameOver() == false) {
                 player.Render();
                 enemies.RenderEntities();
                 playerShots.RenderEntities();
                 enemyExplosions.RenderAnimations();
-                if (enemies.CountEntities() == 0){
-                NewWave();
-                NewSpeed();
-            }
+                if (enemies.CountEntities() == 0) {
+                    NewWave();
+                    NewSpeed();
+                }
             }
             DifferentMoves();
             score.RenderScore();
@@ -189,13 +188,15 @@ namespace Galaga {
         public void KeyPress(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Move_Left"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Move_Left"
                     });
                     break;
                 case KeyboardKey.Right:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Move_Right"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Move_Right"
                     });
                     break;
                 default:
@@ -203,27 +204,31 @@ namespace Galaga {
 
             }
         }
-        
+
         public void KeyRelease(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Release_Left"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Left"
                     });
                     break;
                 case KeyboardKey.Right:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Release_Right"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Right"
                     });
                     break;
                 case KeyboardKey.Escape:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Release_Escape"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Escape"
                     });
                     break;
                 case KeyboardKey.Space:
-                    eventBus.RegisterEvent (new GameEvent{
-                        EventType = GameEventType.InputEvent, Message = "Release_Space"
+                    eventBus.RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Space"
                     });
                     break;
                 //Create new shot and add to container 
@@ -262,22 +267,20 @@ namespace Galaga {
                 if (shot.Shape.Position.Y > 1) {
                     shot.DeleteEntity();
 
-                } 
-                else {
+                } else {
                     enemies.Iterate(enemy => {
-                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision){
+                        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape).Collision) {
                             enemy.HitPoints -= 40;
-                            if (enemy.HitPoints <= 0){
+                            if (enemy.HitPoints <= 0) {
                                 shot.DeleteEntity();
                                 enemy.DeleteEntity();
-                                AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                                AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
                                 score.AddPoints();
-                            }   
-                            else if (enemy.IsShot()){
-                                ImageStride turnRed = new ImageStride(8,enemyStridesRed);
+                            } else if (enemy.IsShot()) {
+                                ImageStride turnRed = new ImageStride(8, enemyStridesRed);
                                 enemy.Image = turnRed;
                             }
-                            
+
                         }
 
                     });
