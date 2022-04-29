@@ -76,7 +76,7 @@ public class Level {
                     continue;
             }
 
-            ArrayList mapData = new ArrayList();
+            //ArrayList mapData = new ArrayList();
 
             if (isReadingMapData) {
                 ReadMapLine(line);
@@ -118,7 +118,7 @@ public class Level {
 /*
 public class Program {
     public static void Main(string[] args) {
-        Level map = new Level("C:\\Users\\Benjamin\\Desktop\\GoCrazy\\CollatzSolution\\level3.txt");
+        Level map = new Level(");
         Console.WriteLine(map.GetMetaData("Name"));
         Console.WriteLine(map.GetMetaData("Time"));
         Console.WriteLine(map.GetMetaData("Hardened"));
@@ -126,89 +126,4 @@ public class Program {
 
     }
 }
-*/
-/*
-
-PS C:\Users\Benjamin\Desktop\GoCrazy\CollatzSolution\collatz> dotnet run      
- LEVEL 3
- 180
-
- #
-ROW: 0, COL: 0PNGFILE: yellow-block.png
-ROW: 0, COL: 1PNGFILE: yellow-block.png
-ROW: 0, COL: 2PNGFILE: yellow-block.png
-ROW: 0, COL: 3PNGFILE: yellow-block.png
-ROW: 0, COL: 4PNGFILE: yellow-block.png
-ROW: 0, COL: 5PNGFILE: yellow-block.png
-ROW: 0, COL: 6PNGFILE: yellow-block.png
-ROW: 0, COL: 7PNGFILE: yellow-block.png
-ROW: 0, COL: 8PNGFILE: yellow-block.png
-ROW: 0, COL: 9PNGFILE: yellow-block.png
-ROW: 0, COL: 10PNGFILE: yellow-block.png
-ROW: 0, COL: 11PNGFILE: yellow-block.png
-ROW: 2, COL: 1PNGFILE: green-block.png
-ROW: 2, COL: 10PNGFILE: green-block.png
-ROW: 3, COL: 2PNGFILE: green-block.png
-ROW: 3, COL: 9PNGFILE: green-block.png
-ROW: 4, COL: 3PNGFILE: green-block.png
-ROW: 4, COL: 8PNGFILE: green-block.png
-ROW: 5, COL: 4PNGFILE: green-block.png
-ROW: 5, COL: 7PNGFILE: green-block.png
-ROW: 8, COL: 3PNGFILE: brown-block.png
-ROW: 8, COL: 8PNGFILE: brown-block.png
-ROW: 9, COL: 0PNGFILE: orange-block.png
-ROW: 9, COL: 1PNGFILE: orange-block.png
-ROW: 9, COL: 2PNGFILE: orange-block.png
-ROW: 9, COL: 3PNGFILE: brown-block.png
-ROW: 9, COL: 8PNGFILE: brown-block.png
-ROW: 9, COL: 9PNGFILE: orange-block.png
-ROW: 9, COL: 10PNGFILE: orange-block.png
-ROW: 9, COL: 11PNGFILE: orange-block.png
-ROW: 10, COL: 0PNGFILE: orange-block.png
-ROW: 10, COL: 1PNGFILE: orange-block.png
-ROW: 10, COL: 2PNGFILE: orange-block.png
-ROW: 10, COL: 3PNGFILE: brown-block.png
-ROW: 10, COL: 8PNGFILE: brown-block.png
-ROW: 10, COL: 9PNGFILE: orange-block.png
-ROW: 10, COL: 10PNGFILE: orange-block.png
-ROW: 10, COL: 11PNGFILE: orange-block.png
-ROW: 11, COL: 0PNGFILE: orange-block.png
-ROW: 11, COL: 1PNGFILE: orange-block.png
-ROW: 11, COL: 2PNGFILE: orange-block.png
-ROW: 11, COL: 3PNGFILE: brown-block.png
-ROW: 11, COL: 8PNGFILE: brown-block.png
-ROW: 11, COL: 9PNGFILE: orange-block.png
-ROW: 11, COL: 10PNGFILE: orange-block.png
-ROW: 11, COL: 11PNGFILE: orange-block.png
-ROW: 12, COL: 0PNGFILE: orange-block.png
-ROW: 12, COL: 1PNGFILE: orange-block.png
-ROW: 12, COL: 2PNGFILE: orange-block.png
-ROW: 12, COL: 3PNGFILE: brown-block.png
-ROW: 12, COL: 5PNGFILE: green-block.png
-ROW: 12, COL: 6PNGFILE: green-block.png
-ROW: 12, COL: 8PNGFILE: brown-block.png
-ROW: 12, COL: 9PNGFILE: orange-block.png
-ROW: 12, COL: 10PNGFILE: orange-block.png
-ROW: 12, COL: 11PNGFILE: orange-block.png
-ROW: 13, COL: 0PNGFILE: orange-block.png
-ROW: 13, COL: 1PNGFILE: orange-block.png
-ROW: 13, COL: 2PNGFILE: orange-block.png
-ROW: 13, COL: 3PNGFILE: brown-block.png
-ROW: 13, COL: 8PNGFILE: brown-block.png
-ROW: 13, COL: 9PNGFILE: orange-block.png
-ROW: 13, COL: 10PNGFILE: orange-block.png
-ROW: 13, COL: 11PNGFILE: orange-block.png
-ROW: 14, COL: 0PNGFILE: brown-block.png
-ROW: 14, COL: 1PNGFILE: brown-block.png
-ROW: 14, COL: 2PNGFILE: brown-block.png
-ROW: 14, COL: 3PNGFILE: brown-block.png
-ROW: 14, COL: 4PNGFILE: darkgreen-block.png
-ROW: 14, COL: 5PNGFILE: darkgreen-block.png
-ROW: 14, COL: 6PNGFILE: darkgreen-block.png
-ROW: 14, COL: 7PNGFILE: darkgreen-block.png
-ROW: 14, COL: 8PNGFILE: brown-block.png
-ROW: 14, COL: 9PNGFILE: brown-block.png
-ROW: 14, COL: 10PNGFILE: brown-block.png
-ROW: 14, COL: 11PNGFILE: brown-block.png
-
 */

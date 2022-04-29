@@ -29,6 +29,7 @@ public class Block : Entity {
 
     public void Render() {
         this.entity.RenderEntity();
+        //System.Console.WriteLine(GetPosition());
     }
 
     public Vec2F GetPosition() {

@@ -23,6 +23,7 @@ namespace Breakout {
     }
 
     public class ProcessStates : IGameState {
+
         public void ResetState() {
 
         }

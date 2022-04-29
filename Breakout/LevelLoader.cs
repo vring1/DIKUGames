@@ -37,20 +37,21 @@ public class LevelLoader {
         }
 
         var lines = level.GetLines();
-        for (int i = 0; i < lines.Length; i++) {
+        Array.Reverse(lines);
+        for (int i = lines.Length - 1; i >= 0; i--) {
             var line = lines[i];
-            for (int j = 0; j < line.Length; j++) {
+            for (int j = line.Length - 1; j >= 0; j--) {
                 if (line[j] != "") {
                     // TODO: Actually load level
                     //Console.WriteLine("ROW: " + i + ", COL: " + j + ", IMAGE-OBJECT: " + line[j]);
-                    var fedtBillede = new Image(Path.Combine("Assets", "Images", line[j]));
-                    var vec1 = new Vec2F((float) (i / 12), (float) (j / 25));
-                    var vec2 = new Vec2F(0.05f, 0.05f);
-                    var shape = new StationaryShape(vec1, vec2);
-                    var block = new Block(shape, fedtBillede);
+                    var blockPicture = new Image(Path.Combine("Assets", "Images", line[j]));
+                    var vec1 = new Vec2F((float) j / 12, (float) i / 25);
+                    var extent = new Vec2F(0.05f, 0.025f);
+                    var shape = new StationaryShape(vec1, extent);
+                    var block = new Block(shape, blockPicture);
                     //blocks.Add(block);
                     blocks.Add(block);
-                    System.Console.WriteLine("" + (float) i / 12 + " " + (float) j / 25);
+                    //System.Console.WriteLine(vec1);
                 }
             }
         }

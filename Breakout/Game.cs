@@ -18,16 +18,16 @@ public class Game : DIKUGame, IGameEventProcessor //DIKUGame
     private Player player;
     private GameEventBus eventBus;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
-        LevelLoader.LoadLevel(1);
+        LevelLoader.LoadLevel(3);
         player = Player.GetInstance();
         eventBus = new GameEventBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, this);
         eventBus.Subscribe(GameEventType.InputEvent, player);
-
     }
     public override void Update() {
+        eventBus.ProcessEventsSequentially();
         player.Move();
     }
 
