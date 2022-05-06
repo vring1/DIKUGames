@@ -41,13 +41,13 @@ public class PlayerTest {
         player = Player.GetInstance();
         BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);*/
     }
-
     [Test]
     public void GetPositionTest() {
         Vec2F somePosition = new Vec2F(0.45f, 0.1f);
         Assert.AreEqual(player.GetPosition().X, somePosition.X);
         Assert.AreEqual(player.GetPosition().Y, somePosition.Y);
     }
+
     [Test]
     public void MoveLeftTest() {
         var currPos = player.GetPosition();
@@ -58,9 +58,6 @@ public class PlayerTest {
         player.Move();
         Assert.Less(player.Shape.Position.X, currPos.X);
         Assert.AreEqual(currPos.Y, player.Shape.Position.Y);
-
-        //Assert.That(player.Shape.Position.X, Is.EqualTo(0.44f));
-        //Assert.That(player.Shape.Position.Y, Is.EqualTo(0.1f));
     }
     [Test]
     public void MoveRightTest() {
@@ -77,7 +74,7 @@ public class PlayerTest {
     }
 
     [Test]
-    public void OutOfBounds() {
+    public void OutOfBoundsToTheLeftTest() {
         //var currPos = player.GetPosition();
         player.Shape.SetPosition(new Vec2F(0.0f, 0.1f));
         var newPos = player.GetPosition();
@@ -85,6 +82,24 @@ public class PlayerTest {
         player.ProcessEvent(new GameEvent {
             EventType = GameEventType.InputEvent,
             Message = "Move_Left"
+        });
+        for (int i = 0; i < 3; i++) {
+            player.Move();
+        }
+        //Math.Round(player.Shape.Position.X);
+        // sammenlign koordinater i stedet
+        Assert.AreEqual(player.Shape.Position.X, newPos.X);
+        Assert.AreEqual(player.Shape.Position.Y, newPos.Y);
+        //Assert.AreEqual(player.GetPosition(), newPos);
+    }
+    public void OutOfBoundsToTheRightTest() {
+        //var currPos = player.GetPosition();
+        player.Shape.SetPosition(new Vec2F(1.0f, 0.1f));
+        var newPos = player.GetPosition();
+        //player.SetMoveLeft(true);
+        player.ProcessEvent(new GameEvent {
+            EventType = GameEventType.InputEvent,
+            Message = "Move_"
         });
         for (int i = 0; i < 3; i++) {
             player.Move();

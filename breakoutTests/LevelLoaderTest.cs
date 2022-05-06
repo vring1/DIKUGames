@@ -25,11 +25,10 @@ public class LevelLoaderTest {
     }
 
     [Test]
-    public void LoadLevel1Test() {
+    public void LoadLevel4Test() {
         var projectPath = FileIO.GetProjectPath();
-        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
-        Assert.AreEqual(LevelLoader.blocks, new List<Block>());
-
+        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level5.txt"));
+        Assert.AreEqual(LevelLoader.blocks, new List<Block>[] { });
     }
     [Test]
     public void LoadLevel2Test() {
@@ -47,6 +46,10 @@ public class LevelLoaderTest {
     public void LoadInvalidLevelTest() {
         var projectPath = FileIO.GetProjectPath();
         LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level1992.txt"));
-        Assert.AreEqual(LevelLoader.blocks, LevelLoader.blocks);
+        Assert.AreEqual(LevelLoader.blocks, new List<Block>[] { });
     }
+    [Test]
+    public void LoadInvalidFileFormatTest() {
+    }
+
 }

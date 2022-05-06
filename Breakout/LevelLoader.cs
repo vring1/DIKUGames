@@ -15,16 +15,11 @@ using System;
 
 namespace Breakout;
 public class LevelLoader {
-    /*private static Level level1 = new Level(Path.Combine("Assets", "Levels", "level1.txt"));
-    private static Level level2 = new Level(Path.Combine("Assets", "Levels", "level2.txt"));
-    private static Level level3 = new Level(Path.Combine("Assets", "Levels", "level3.txt"));*/
-
-    //private static Level LevelForTesting = new Level(Path.Combine("../", "../", "../", "Assets", "Levels", "level1.txt"));
     public static List<Block> blocks = new List<Block>();
 
-
     public static void LoadLevel(string filePath) {
-        if (Directory.Exists(filePath) && File.Exists(filePath)) {
+        string fileExt = System.IO.Path.GetExtension(filePath);
+        if (File.Exists(filePath) && fileExt == ".txt") {
             Level level = new Level(filePath);
             var lines = level.GetLines();
             Array.Reverse(lines);
