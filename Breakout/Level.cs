@@ -110,8 +110,13 @@ public class Level {
             return "";
         }
     }
-
-
+    public string GetLegendData(string key) {
+        if (LegendData.ContainsKey(key)) {
+            return LegendData[key];
+        } else {
+            return "";
+        }
+    }
 
 
 }

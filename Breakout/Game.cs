@@ -18,7 +18,7 @@ public class Game : DIKUGame, IGameEventProcessor //DIKUGame
     private Player player;
     private GameEventBus eventBus;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
-        LevelLoader.LoadLevel(3);
+        LevelLoader.LoadLevel(Path.Combine("Assets", "Levels", "level1.txt"));
         player = Player.GetInstance();
         eventBus = new GameEventBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
