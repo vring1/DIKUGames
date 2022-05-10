@@ -25,31 +25,46 @@ public class LevelLoaderTest {
     }
 
     [Test]
-    public void LoadLevel4Test() {
+    public void LoadLevel1Test() {
         var projectPath = FileIO.GetProjectPath();
-        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level5.txt"));
-        Assert.AreEqual(LevelLoader.blocks, new List<Block>[] { });
+        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
+        Assert.AreEqual(LevelLoader.blockCount, 76);
     }
     [Test]
     public void LoadLevel2Test() {
         var projectPath = FileIO.GetProjectPath();
         LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level2.txt"));
-        Assert.AreEqual(LevelLoader.blocks, LevelLoader.blocks);
+        Assert.AreEqual(LevelLoader.blockCount, 72);
     }
     [Test]
     public void LoadLevel3Test() {
         var projectPath = FileIO.GetProjectPath();
         LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level3.txt"));
-        Assert.AreEqual(LevelLoader.blocks, LevelLoader.blocks);
+        Assert.AreEqual(LevelLoader.blockCount, 76);
+    }
+    [Test]
+    public void LoadLevel5Test() {
+        var projectPath = FileIO.GetProjectPath();
+        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level5.txt"));
+        Assert.AreEqual(LevelLoader.blockCount, 1);
     }
     [Test]
     public void LoadInvalidLevelTest() {
         var projectPath = FileIO.GetProjectPath();
         LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level1992.txt"));
-        Assert.AreEqual(LevelLoader.blocks, new List<Block>[] { });
+        Assert.AreEqual(LevelLoader.blockCount, 0);
     }
     [Test]
     public void LoadInvalidFileFormatTest() {
+        var projectPath = FileIO.GetProjectPath();
+        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "hola.pdf"));
+        Assert.AreEqual(LevelLoader.blockCount, 0);
+    }
+    [Test]
+    public void LoadWallTest() {
+        var projectPath = FileIO.GetProjectPath();
+        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "wall.txt"));
+        Assert.AreEqual(LevelLoader.blockCount, 144);
     }
 
 }

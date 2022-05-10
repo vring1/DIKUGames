@@ -24,12 +24,6 @@ public class LevelTest {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
     }
 
-    /*[Test]
-    public void TestMap() {
-        Level testLevel = new Level(Path.Combine("../", "../", "../", "Assets", "Levels", "level1.txt"));
-        Assert.AreEqual(testLevel.GetLines(), "hej");
-    }*/
-
     [Test]
     public void TestMeta() {
         //Assert.Pass();

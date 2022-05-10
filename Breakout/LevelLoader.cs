@@ -16,8 +16,9 @@ using System;
 namespace Breakout;
 public class LevelLoader {
     public static List<Block> blocks = new List<Block>();
-
+    public static int blockCount;
     public static void LoadLevel(string filePath) {
+        blockCount = 0;
         string fileExt = System.IO.Path.GetExtension(filePath);
         if (File.Exists(filePath) && fileExt == ".txt") {
             Level level = new Level(filePath);
@@ -36,6 +37,8 @@ public class LevelLoader {
                         var block = new Block(shape, blockPicture);
                         //blocks.Add(block);
                         blocks.Add(block);
+                        blockCount++;
+                        System.Console.WriteLine(blockCount);
                         //System.Console.WriteLine(vec1);
                     }
                 }

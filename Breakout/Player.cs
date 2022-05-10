@@ -58,7 +58,6 @@ namespace Breakout {
         private void SetMoveLeft(bool val) {
 
             if (val == true) {
-                System.Console.WriteLine("test");
                 this.moveLeft = -MOVEMENT_SPEED;
 
             } else {
