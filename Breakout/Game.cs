@@ -17,6 +17,8 @@ public class Game : DIKUGame, IGameEventProcessor //DIKUGame
 {
     private Player player;
     private GameEventBus eventBus;
+    //private StateMachine stateMachine;
+    // switch på StateMachine.Activestate og kør den rette state
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         LevelLoader.LoadLevel(Path.Combine("Assets", "Levels", "level1.txt"));
         player = Player.GetInstance();

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 
-namespace Galaga {
+namespace Breakout.GameStates {
     public class GameRunning : IGameState {
         private static GameRunning instance = null;
         private Entity backGroundImage;
@@ -56,7 +56,7 @@ namespace Galaga {
                 if (key == KeyboardKey.Enter) {
                     //Register event for currently selected button
                     if (activeMenuButton == 1) {
-                        GalagaBus.GetBus().RegisterEvent(
+                        BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
                             EventType = GameEventType.GameStateEvent,
                             Message = "CHANGE_STATE",

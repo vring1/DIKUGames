@@ -56,10 +56,8 @@ namespace Breakout {
 
 
         private void SetMoveLeft(bool val) {
-
             if (val == true) {
                 this.moveLeft = -MOVEMENT_SPEED;
-
             } else {
                 this.moveLeft = 0.0f;
             }
