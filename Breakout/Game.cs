@@ -16,6 +16,7 @@ namespace Breakout;
 public class Game : DIKUGame, IGameEventProcessor //DIKUGame 
 {
     private Player player;
+    private Ball ball;
     private GameEventBus eventBus;
     //private StateMachine stateMachine;
     // switch på StateMachine.Activestate og kør den rette state
@@ -27,14 +28,22 @@ public class Game : DIKUGame, IGameEventProcessor //DIKUGame
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, this);
         eventBus.Subscribe(GameEventType.InputEvent, player);
+
+        ball = new Ball(
+                new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
+                new Image(Path.Combine("Assets", "Images", "ball.png")));
     }
+
     public override void Update() {
         eventBus.ProcessEventsSequentially();
         player.Move();
+        ball.MoveBall();
+        
     }
 
     public override void Render() {
         player.Render();
+        ball.Render();
         foreach (Block block in LevelLoader.blocks) {
             block.Render();
         }

@@ -1,32 +1,81 @@
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using System.IO;
-using System.Collections.Generic;
 using System;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
-using System.IO;
+using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using System.Collections.Generic;
+using System.IO;
 using DIKUArcade.Events;
+using DIKUArcade.Physics;
 
-namespace Breakout {
-    public class Ball : Entity {
-        private Entity entity;
+namespace Breakout
+{
+    public class Ball : Entity
+    {
         public DynamicShape shape;
-
-        public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
+        private Entity entity;
+        public Vec2F startPosition;
+        private bool ballIsDeleted = false;
+        
+        public Ball(DynamicShape shape, IBaseImage image) : base(shape, image)
+        {
             entity = new Entity(shape, image);
+            this.startPosition = Shape.Position;
             this.shape = shape;
+            shape.Direction.Y = 0.01f;
+            shape.Direction.X = -0.01f;
         }
 
-        public void Render() {
+        public float GetPositionX()
+        {
+            return shape.Position.X;
+        }
+
+        public float GetPositionY()
+        {
+            return shape.Position.Y;
+        }
+        
+        public void SwitchDirection()
+        {
+            shape.Direction.Y = -shape.Direction.Y;
+            shape.Direction.X = -shape.Direction.X;
+        }
+
+        public void Render()
+        {
             entity.RenderEntity();
-
         }
 
+        public void MoveBall()
+        {
+            if (shape.Position.X  > 1.0f)
+            {
+                shape.Direction.X *= -1.0f;
+                shape.Position.X=0.95F;
+            }
+            if (shape.Position.X < 0.0f )
+            {
+                shape.Direction.X *= -1.0f;
+                shape.Position.X=0;
+            }
+            if (shape.Position.Y > 1.0f)
+            {
+                shape.Direction.Y *= -1.0f;
+                shape.Position.Y=1;
+            }
+
+            if (shape.Position.Y <= 0)
+                DeleteEntity();
+
+            shape.Move(shape.Direction.X,shape.Direction.Y);
+        }
+
+        public bool IsThisBallDeleted (){
+            DeleteEntity();
+            ballIsDeleted = true;
+            return ballIsDeleted;
+        }
     }
 }
