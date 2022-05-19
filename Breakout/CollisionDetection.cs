@@ -66,26 +66,30 @@ namespace Breakout{
                     {
                         if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirDown)
                         {
+                            block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
-                            
+                            block.DeleteBlock();
                         }
                         else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirUp)
                         {
+                            block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
-
+                            block.DeleteBlock();
                             
                             
                         }
                         else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirLeft)
                         {
+                            block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
-                            
+                            block.DeleteBlock();
                             
                         }
                         else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirRight)
                         {
+                            block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
-
+                            block.DeleteBlock();
                             
                             
                         }

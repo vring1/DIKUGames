@@ -23,6 +23,7 @@ namespace Breakout {
         public abstract bool isUnbreakable();
 
         public abstract void DeleteBlock();
+        
         public abstract void Render();
     }
 }
