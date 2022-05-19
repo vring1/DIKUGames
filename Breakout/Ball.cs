@@ -17,6 +17,7 @@ namespace Breakout
         private Entity entity;
         public Vec2F startPosition;
         private bool ballIsDeleted = false;
+        private Random rand = new Random();
         
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image)
         {
@@ -76,6 +77,14 @@ namespace Breakout
             DeleteEntity();
             ballIsDeleted = true;
             return ballIsDeleted;
+        }
+
+        public float randy()
+        { //returns a random float
+            int number = rand.Next(-500, 501);
+            float numf = (float)number;
+            numf = numf / 100000;
+            return numf;
         }
     }
 }

@@ -16,37 +16,55 @@ namespace Breakout;
 public class Game : DIKUGame, IGameEventProcessor //DIKUGame 
 {
     private Player player;
-    private Ball ball;
+    public Ball ball;
     private GameEventBus eventBus;
+    public EntityContainer<Ball> ballContainer;
+    public int ballCount;
+
+    public LevelLoader level;
+    public EntityContainer<Block> blockContainer;
+
+    private CollisionDetect collisionDetection;
     //private StateMachine stateMachine;
     // switch på StateMachine.Activestate og kør den rette state
     public Game(WindowArgs windowArgs) : base(windowArgs) {
-        LevelLoader.LoadLevel(Path.Combine("Assets", "Levels", "level1.txt"));
+        level = new LevelLoader();
+
+        blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
+
         player = Player.GetInstance();
         eventBus = new GameEventBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, this);
         eventBus.Subscribe(GameEventType.InputEvent, player);
+        collisionDetection = new CollisionDetect();
 
         ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png")));
+        ballContainer = AddBalls();
     }
+
+     public EntityContainer<Ball> AddBalls()
+        {
+            EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
+            ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(0.45f, 0.2f), new Vec2F(0.03f, 0.03f)), new Image(Path.Combine("Assets", "Images", "ball.png"))));
+            ballCount++;
+            return ballContainer;
+        }
 
     public override void Update() {
         eventBus.ProcessEventsSequentially();
         player.Move();
         ball.MoveBall();
-        
+        collisionDetection.BallDetec(ballContainer,player,ball,blockContainer,new Vec2F(player.GetPositionX(),0.2f));
     }
 
     public override void Render() {
         player.Render();
-        ball.Render();
-        foreach (Block block in LevelLoader.blocks) {
-            block.Render();
-        }
+        blockContainer.RenderEntities();
+        ballContainer.RenderEntities();
     }
 
     private void KeyHandler(KeyboardAction action, KeyboardKey key) {

@@ -21,7 +21,7 @@ namespace Breakout{
         private StationaryShape shape { get; set; }
             
         private IBaseImage AltImage { get; set; }
-        private int HP { get; set; }
+        public int HP { get; set; }
         
         public Blocks(Vec2F Position, IBaseImage Image, IBaseImage altImage, int HP)
                 : base(Position, Image, HP)

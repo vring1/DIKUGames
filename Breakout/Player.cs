@@ -83,6 +83,14 @@ namespace Breakout {
             return this.shape.Position;
         }
 
+        public float GetPositionX() {
+            return this.shape.Position.X;
+        }
+
+        public float GetPositionY() {
+            return this.shape.Position.Y;
+        }
+
         public void ProcessEvent(GameEvent gameEvent) {
 
             if (gameEvent.EventType == GameEventType.InputEvent) {

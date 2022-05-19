@@ -19,15 +19,56 @@ using DIKUArcade.Utilities;
 namespace breakoutTests;
 
 public class LevelLoaderTest {
+
+    private Breakout.LevelLoader levelTest;
+    private EntityContainer<Block> blockContainerTest;
+    private EntityContainer<Block> EmptyContainerTest;
+
+    [SetUp]
+
+    public void Setup()
+    {
+        DIKUArcade.GUI.Window.CreateOpenGLContext();
+        levelTest = new LevelLoader();
+    }
+
+    [Test]
+    public void TestFillingBlockContainer()
+    {
+
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level2.txt");
+        Assert.AreNotEqual(blockContainerTest ,EmptyContainerTest);
+    }
+
+    [Test]
+    public void TestMetaDataSaved()
+    {
+
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/levelTest.txt");
+        string SavedMetaData = levelTest.getmetaString();
+        Console.WriteLine(SavedMetaData);
+        Assert.AreEqual(SavedMetaData, levelTest.getmetaString());
+    }
+
+    [Test]
+    public void TestLegendDataSaved()
+    {
+
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/levelTest.txt");
+        string[] SavedLegendData = levelTest.getlegendStringArray();
+        Assert.AreEqual(SavedLegendData, levelTest.getlegendStringArray());
+    }
+    /*
     [SetUp]
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
+        
     }
 
     [Test]
     public void LoadLevel1Test() {
         var projectPath = FileIO.GetProjectPath();
-        LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
+        level.AddBlocks( @"Assets/Levels/level1.txt");
         Assert.AreEqual(LevelLoader.blockCount, 76);
     }
     [Test]
@@ -65,6 +106,6 @@ public class LevelLoaderTest {
         var projectPath = FileIO.GetProjectPath();
         LevelLoader.LoadLevel(Path.Combine(projectPath, "Assets", "Levels", "wall.txt"));
         Assert.AreEqual(LevelLoader.blockCount, 144);
-    }
+    }*/
 
 }
