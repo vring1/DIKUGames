@@ -17,26 +17,34 @@ using System;
 namespace breakoutTests;
 
 public class BlockTest {
+     private Breakout.Blocks block;
+
     [SetUp]
-    public void Setup() {
+    public void Setup()
+    {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
-        //LevelLoader.LoadLevel(3);
-        //var windowArgs = new WindowArgs() { Title = "Breakout" };
-        //var game = new Game(windowArgs);
-
-        //eventBus = new GameEventBus();
-        //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.PlayerEvent });
-        //eventBus.Subscribe(GameEventType.PlayerEvent, player);
-
+        
+        block = (new Blocks
+                (new Vec2F(0.5f, 0.5f),
+                 new Image(Path.Combine
+                ("Assets", "Images", "blue-block.png")), new Image(Path.Combine("Assets", "Images", "blue-block.png")), 2));
     }
 
     [Test]
-    public void GetPositionTest() {
-        Block block = new Block(
-                new StationaryShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.02f)),
-                new Image(Path.Combine("Assets", "Images", "grey-block.png")));
-        Vec2F somePosition = new Vec2F(0.45f, 0.1f);
-        Assert.AreEqual(block.GetPosition().X, somePosition.X);
-        Assert.AreEqual(block.GetPosition().Y, somePosition.Y);
+    public void TestGetBlockPosition()
+    {
+        
+        Vec2F blockPosition = new Vec2F(0.5f, 0.5f);
+        Assert.AreEqual(block.GetThisPositionX(), blockPosition.X);
+        Assert.AreEqual(block.GetThisPositionY(), blockPosition.Y);
+    }
+
+    [Test]
+    public void TestBlockHP()
+    {   
+        int currHP = block.HP;
+        block.isHit();
+        Assert.AreNotEqual(block.HP , currHP);
+        
     }
 }
