@@ -1,5 +1,4 @@
-
-using DIKUArcade.Entities;
+/*using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Input;
@@ -14,25 +13,21 @@ using DIKUArcade.GUI;
 
 namespace Breakout {
 
-    public class Score {
-        private static Score instance = new Score(new Vec2F(0.9f, 0.5f), new Vec2F(0.45f, 0.45f));
-        private int count;
+    public class ScoreOld {
+        private static int score;
         private Text display;
         public Score(Vec2F position, Vec2F extent) {
-            count = 0;
-            display = new Text(count.ToString(), position, extent);
+            score = 0;
+            display = new Text(score.ToString(), position, extent);
             display.SetColor(System.Drawing.Color.White);
         }
         public void AddPoints() {
-            count++;
-        }
-        public static Score GetInstance() {
-            return instance;
+            score++;
         }
 
         public void DecreasePoints() {
-            if (count > 0) {
-                count--;
+            if (score > 0) {
+                score--;
             }
         }
         public void RenderScore() {
@@ -40,8 +35,8 @@ namespace Breakout {
         }
 
         public void UpdateScore() {
-            display.SetText(count.ToString());
+            display.SetText(score.ToString());
         }
     }
 
-}
+}*/

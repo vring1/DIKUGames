@@ -12,27 +12,55 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 using System;
 using DIKUArcade.State;
-using Breakout.GameStates;
+//using Breakout.GameStates;
 
-namespace Breakout;
+namespace Breakout.GameStates;
 public class StateMachine : IGameEventProcessor {
     public IGameState ActiveState {
         get; private set;
     }
+    //private GameEventBus eventBus;
+    private static StateMachine instance = new StateMachine();
     public StateMachine() {
+        //eventBus = new GameEventBus();
+        //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
+        /*BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
+            GameEventType.InputEvent,
+            GameEventType.GameStateEvent,
+            GameEventType.PlayerEvent
+         });*/
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
         BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-        IGameState ActiveState = MainMenu.GetInstance();
+        BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
+        //IGameState ActiveState = MainMenu.GetInstance();
+        //ActiveState = GameRunning.GetInstance();
         GameRunning.GetInstance();
         GamePaused.GetInstance();
+        ActiveState = MainMenu.GetInstance();
     }
+    public static StateMachine GetInstance() {
+        return instance;
+    }
+    /*public void RenderState() {
+        //eventBus.ProcessEventsSequentially();
+        ActiveState.RenderState();
+    }
+    public void UpdateState() {
+        System.Console.WriteLine("hej5");
+        //eventBus.ProcessEventsSequentially();
+        ActiveState.UpdateState();
+        System.Console.WriteLine("hej6");
+    }*/
+
     public void ProcessEvent(GameEvent gameEvent) {
+        System.Console.WriteLine("process");
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             var state = gameEvent.Message;
             //this.SwitchState(StateTransformer.TransformStringToState(state));
             switch (state) {
                 case "GAME_RUNNING":
                     SwitchState(StateTransformer.TransformStringToState(state));
+                    //ActiveState.ResetState();
                     break;
                 case "MAIN_MENU":
                     SwitchState(StateTransformer.TransformStringToState(state));
@@ -46,6 +74,7 @@ public class StateMachine : IGameEventProcessor {
         }
     }
     private void SwitchState(GameStateType stateType) {
+        System.Console.WriteLine("switch");
         switch (stateType) {
             case GameStateType.MAIN_MENU:
                 ActiveState = MainMenu.GetInstance();

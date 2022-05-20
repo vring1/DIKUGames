@@ -12,13 +12,37 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates {
-    public class GameRunning : IGameState {
+    public class GameRunning : IGameState/*, IGameEventProcessor*/ {
+        private Player player;
         private static GameRunning instance = null;
-        private Entity backGroundImage;
-        private Text[] menuButtons;
-        private int activeMenuButton;
-        private int maxMenuButtons;
+        private Score score;
+        private GameEventBus eventBus;
+        public Ball ball;
+        public EntityContainer<Ball> ballContainer;
+        public int ballCount;
+        public LevelLoader level;
+        public EntityContainer<Block> blockContainer;
 
+        private CollisionDetect collisionDetection;
+
+        public GameRunning() {
+            System.Console.WriteLine("gameRunningConstrucoter");
+            //score = new Score(new Vec2F(0.9f, 0.5f), new Vec2F(0.45f, 0.45f));
+            score = Score.GetInstance();
+            //eventBus = new GameEventBus();
+            //eventBus = new GameEventBus();
+            //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
+
+
+
+            //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+            //eventBus.Subscribe(GameEventType.PlayerEvent, player);
+
+
+            //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+            //BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+        }
+        //public void ProcessEvent(GameEvent gameEvent) {}
         public static GameRunning GetInstance() {
             if (GameRunning.instance == null) {
                 GameRunning.instance = new GameRunning();
@@ -26,98 +50,108 @@ namespace Breakout.GameStates {
             }
             return GameRunning.instance;
         }
-
-        public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            int index = 0;
-            if (action == KeyboardAction.KeyPress || action == KeyboardAction.KeyRelease) {
-                if (key == KeyboardKey.Up) {
-                    if (menuButtons[index + 1] == null) {
-                        // CANNOT MOVE
-                    }//Select button above current button
-                    else {
-                        // SET INDEX 1 active (new Game)
-                        // SET COLOR OF NEW GAME
-                        activeMenuButton = 1;
-                        index++;
-                    }
-                }
-                if (key == KeyboardKey.Down) {
-                    //Select button below current button
-                    if (menuButtons[index - 1] == null) {
-                        // CANNOT MOVE
-                    } else {
-                        // SET INDEX 0 active (quit Game)
-                        // SET COLOR OF QUIT GAME 
-                        activeMenuButton = 0;
-                        index--;
-                    }
-                }
-
-                if (key == KeyboardKey.Enter) {
-                    //Register event for currently selected button
-                    if (activeMenuButton == 1) {
-                        BreakoutBus.GetBus().RegisterEvent(
-                        new GameEvent {
-                            EventType = GameEventType.GameStateEvent,
-                            Message = "CHANGE_STATE",
-                            StringArg1 = "GAME_RUNNING"
-                        }
-                    );
-                    } else {
-                        // LUK VINDUET WALLAH
-                    }
-
-
-                }
-                // else: do nothing... 
-            }
-
-            //if "New Game" button is selected, the event to register should be (THIS CODE):
-
-            //GalagaBus.GetBus().RegisterEvent(
-            //new GameEvent{
-            //EventType = GameEventType.GameStateEvent,
-            //Message = "CHANGE_STATE",
-            //StringArg1 = "GAME_RUNNING"
-            //}
-            // );
-
-            //This method will be called from the state machine 
-
-            //Assume that action will equal KeyboardAction.KeyPress or KeyboardAction.KeyRelease
-
-            //Depending on the key, perform some action
-            //KeyboardKey.Up - Select button above currently selected button.
-            //KeyboardKey.Down - Select button below currently selected button.
-            //KeyboardKey.Enter - Register an event appropriate for the currently selected button.
-
-            //Do nothing if the key is invalid in the MainMenu state.
-
-            //If "New Game" button is selected, the event to register should be (THIS CODE):
-
-            //GalagaBus.GetBus().RegisterEvent(
-            //new GameEvent{
-            //EventType = GameEventType.GameStateEvent,
-            //Message = "CHANGE_STATE",
-            //StringArg1 = "GAME_RUNNING"
-            //}
-            // );
-
-
-
-        }
         public void RenderState() {
-
+            player.Render();
+            /*foreach (Block block in LevelLoader.blocks) {
+                block.Render();
+            }*/
+            blockContainer.RenderEntities();
+            ballContainer.RenderEntities();
+            score.RenderScore();
         }
         public void ResetState() {
-
+            player.ResetPosition();
+            //ball.ResetPosition();
         }
         public void UpdateState() {
-
+            //BreakoutBus.GetBus().ProcessEventsSequentially();
+            ball.MoveBall();
+            collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
+            player.Move();
+            score.UpdateScore();
+        }
+        public EntityContainer<Ball> AddBalls() {
+            EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
+            ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(0.45f, 0.2f), new Vec2F(0.03f, 0.03f)), new Image(Path.Combine("Assets", "Images", "ball.png"))));
+            ballCount++;
+            return ballContainer;
         }
         public void InitializeGameState() {
-
+            player = Player.GetInstance();
+            //BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, player);
+            //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
+            collisionDetection = new CollisionDetect();
+            level = new LevelLoader();
+            blockContainer = level.AddBlocks(@"Assets/Levels/level3.txt");
+            ball = new Ball(
+                new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
+                new Image(Path.Combine("Assets", "Images", "ball.png")));
+            ballContainer = AddBalls();
+            //LevelLoader.LoadLevel(Path.Combine("Assets", "Levels", "level4.txt"));
         }
+        public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+            System.Console.WriteLine("HandleKeyEvent");
+            if (action == KeyboardAction.KeyPress) {
+                System.Console.WriteLine("keypress");
+                KeyPress(key);
+            }
+            if (action == KeyboardAction.KeyRelease) {
+                KeyRelease(key);
+            }
+        }
+        public void KeyPress(KeyboardKey key) {
+            switch (key) {
+                case KeyboardKey.Left:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Move_Left"
+                    });
+                    break;
+                case KeyboardKey.Right:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Move_Right"
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void KeyRelease(KeyboardKey key) {
+            switch (key) {
+                case KeyboardKey.Left:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Left"
+                    });
+                    break;
+                case KeyboardKey.Right:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Right"
+                    });
+                    break;
+                case KeyboardKey.Escape:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.GameStateEvent,
+                        Message = "GAME_PAUSED"
+                    });
+                    break;
+                case KeyboardKey.Space:
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.InputEvent,
+                        Message = "Release_Space"
+                    });
+                    break;
+                //Create new shot and add to container 
+
+                default:
+                    break;
+
+            }
+        }
+
 
     }
 }

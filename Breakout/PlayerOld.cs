@@ -1,4 +1,4 @@
-using DIKUArcade.Entities;
+/*using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Input;
@@ -15,7 +15,7 @@ using DIKUArcade.GUI;
 
 
 namespace Breakout {
-    public class Player : IGameEventProcessor {
+    public class PlayerOld : IGameEventProcessor {
 
         private static Player instance = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.02f)),
@@ -42,6 +42,7 @@ namespace Breakout {
         public void ResetPosition() {
             this.shape.Position.X = 0.45f;
         }
+
         private void UpdateDirection() {
             this.shape.Direction.X = moveRight + moveLeft;
         }
@@ -85,16 +86,7 @@ namespace Breakout {
             return this.shape.Position;
         }
 
-        public float GetPositionX() {
-            return this.shape.Position.X;
-        }
-
-        public float GetPositionY() {
-            return this.shape.Position.Y;
-        }
-
         public void ProcessEvent(GameEvent gameEvent) {
-
             if (gameEvent.EventType == GameEventType.InputEvent) {
                 switch (gameEvent.Message) {
                     case "Move_Left":
@@ -116,4 +108,4 @@ namespace Breakout {
         }
     }
 
-}
+}*/

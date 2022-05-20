@@ -1,4 +1,4 @@
-using DIKUArcade;
+/*using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using System.IO;
@@ -14,7 +14,7 @@ using System;
 
 namespace Breakout;
 
-public class Block : Entity {
+public class BlockOld : Entity {
 
     private StationaryShape shape;
     private Entity entity;
@@ -36,4 +36,4 @@ public class Block : Entity {
         return this.shape.Position;
     }
 
-}
+}*/

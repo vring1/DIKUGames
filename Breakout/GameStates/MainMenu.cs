@@ -17,7 +17,7 @@ namespace Breakout.GameStates {
         private Entity backGroundImage;
         private static Text newGame; //= new Text("New Game",new Vec2F(0.1f,0.1f),new Vec2F(0.1f,0.1f) );
         private static Text quitGame; //= new Text("Quit Game",new Vec2F(0.2f,0.2f),new Vec2F(0.1f,0.1f) );
-        private Text[] menuButtons = { quitGame, newGame };
+        private Text[] menuButtons = { newGame, quitGame };
         private int activeMenuButton;
         private int maxMenuButtons;
         //private StationaryShape shape;
@@ -28,15 +28,17 @@ namespace Breakout.GameStates {
         //private static GameRunning? gameRunning;
 
         public MainMenu() {
-            Text newGame = new Text("New Game", new Vec2F(0.41f, 0.41f), new Vec2F(0.32f, 0.32f));
+            newGame = new Text("New Game", new Vec2F(0.37f, 0.35f), new Vec2F(0.32f, 0.32f));
 
-            Text quit = new Text("Quit Game", new Vec2F(0.45f, 0.25f), new Vec2F(0.4f, 0.35f));
+            quitGame = new Text("Quit Game", new Vec2F(0.35f, 0.2f), new Vec2F(0.4f, 0.35f));
+            newGame.SetColor(System.Drawing.Color.Red);
+            quitGame.SetColor(System.Drawing.Color.Red);
 
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.00f, 0.00f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
 
-            menuButtons = new Text[] { newGame, quit };
+            menuButtons = new Text[] { newGame, quitGame };
 
-
+            maxMenuButtons = menuButtons.Length;
         }
 
         public static MainMenu GetInstance() {
@@ -51,40 +53,37 @@ namespace Breakout.GameStates {
             return MainMenu.instance;
         }
 
+
+
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            int index = 0;
-            if (action == KeyboardAction.KeyPress || action == KeyboardAction.KeyRelease) {
-                if (key == KeyboardKey.Up) {
-                    if (menuButtons[index + 1] == null) {
-                        // CANNOT MOVE
-                    } else {
-                        quitGame.SetColor(System.Drawing.Color.White);
-                        newGame.SetColor(System.Drawing.Color.Red);
-                        activeMenuButton = 1;
-                        index++;
-                    }
-                }
+            if (action == KeyboardAction.KeyPress /*|| action == KeyboardAction.KeyRelease*/) {
                 if (key == KeyboardKey.Down) {
-                    if (menuButtons[index - 1] == null) {
-                        // CANNOT MOVE
-                    } else {
-                        newGame.SetColor(System.Drawing.Color.White);
-                        quitGame.SetColor(System.Drawing.Color.Red);
-                        activeMenuButton = 0;
-                        index--;
-                    }
+                    quitGame.SetColor(System.Drawing.Color.Green);
+                    newGame.SetColor(System.Drawing.Color.Red);
+                    activeMenuButton = 1;
+                }
+                if (key == KeyboardKey.Up) {
+                    newGame.SetColor(System.Drawing.Color.Green);
+                    quitGame.SetColor(System.Drawing.Color.Red);
+                    activeMenuButton = 0;
                 }
                 if (key == KeyboardKey.Enter) {
-                    if (activeMenuButton == 1) {
+                    if (activeMenuButton == 0) {
+                        // RESET STATE FOR GAME RUNNING
+                        GameRunning.GetInstance().ResetState();
                         BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
                             EventType = GameEventType.GameStateEvent,
-                            Message = "CHANGE_STATE",
-                            StringArg1 = "GAME_RUNNING"
+                            Message = "GAME_RUNNING"
                         }
                     );
                     } else {
-                        // LUK VINDUET 
+                        BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.InputEvent,
+                            Message = "Release_Escape"
+                        }
+                    );
                     }
                 }
                 // else: do nothing... 
