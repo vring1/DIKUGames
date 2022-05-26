@@ -53,7 +53,6 @@ public class StateMachine : IGameEventProcessor {
     }*/
 
     public void ProcessEvent(GameEvent gameEvent) {
-        System.Console.WriteLine("process");
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             var state = gameEvent.Message;
             //this.SwitchState(StateTransformer.TransformStringToState(state));
@@ -74,7 +73,6 @@ public class StateMachine : IGameEventProcessor {
         }
     }
     private void SwitchState(GameStateType stateType) {
-        System.Console.WriteLine("switch");
         switch (stateType) {
             case GameStateType.MAIN_MENU:
                 ActiveState = MainMenu.GetInstance();

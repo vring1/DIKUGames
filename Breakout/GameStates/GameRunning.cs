@@ -26,7 +26,6 @@ namespace Breakout.GameStates {
         private CollisionDetect collisionDetection;
 
         public GameRunning() {
-            System.Console.WriteLine("gameRunningConstrucoter");
             //score = new Score(new Vec2F(0.9f, 0.5f), new Vec2F(0.45f, 0.45f));
             score = Score.GetInstance();
             //eventBus = new GameEventBus();
@@ -69,6 +68,10 @@ namespace Breakout.GameStates {
             collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
             player.Move();
             score.UpdateScore();
+            /*if (blockContainer.CountEntities() == 0) {
+                blockContainer = new EntityContainer<Block>();
+                blockContainer = level.AddBlocks(@"Assets/Levels/level2.txt");
+            }*/
         }
         public EntityContainer<Ball> AddBalls() {
             EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
