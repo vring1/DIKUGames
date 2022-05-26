@@ -85,7 +85,7 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/level0.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level2.txt");
             ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png")));

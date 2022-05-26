@@ -32,7 +32,6 @@ public class LevelLoaderTest {
 
     [Test]
     public void TestFillingBlockContainer() {
-
         blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level2.txt");
         Assert.AreNotEqual(blockContainerTest, EmptyContainerTest);
     }
