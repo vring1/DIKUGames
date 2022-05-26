@@ -26,7 +26,6 @@ public class LevelLoader {
     Dictionary<string, string> metaTimeDict = new Dictionary<string, string>();
 
     public static void GetLines(string path) {
-        // Calling the ReadAllLines() function
         string[] readText = File.ReadAllLines(path);
         foreach (string s in readText) {
             // Printing the string array containing

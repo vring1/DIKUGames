@@ -38,7 +38,7 @@ namespace Breakout {
                 if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), player.Shape).Collision) {
                     Random rand = new Random();
                     if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), player.Shape).CollisionDir == CollisionDirection.CollisionDirUp) {
-                        ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F((float) ball.randy() * 2, 0.02f));
+                        ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F((float) ball.randy() * 2, 0.015f));
 
                     } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), player.Shape).CollisionDir == CollisionDirection.CollisionDirLeft) {
                         ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1,
