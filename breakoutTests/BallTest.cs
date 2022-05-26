@@ -30,8 +30,8 @@ public class BallTest {
         float posY = ball.GetPositionY();
         float posX = ball.GetPositionX();
 
-        Assert.AreEqual(ball.GetPositionX(),posX);
-        Assert.AreEqual(ball.GetPositionY(),posY);
+        Assert.AreEqual(ball.GetPositionX(), posX);
+        Assert.AreEqual(ball.GetPositionY(), posY);
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class BallTest {
         ball.shape.Direction.Y = 0.01f;
         ball.MoveBall();
         ball.MoveBall();
-        Assert.AreEqual( posX , ball.shape.Position.X);
+        Assert.AreEqual(posX, ball.shape.Position.X);
         Assert.IsFalse(ball.shape.Position.Y < 0.14f);
     }
-} 
+}

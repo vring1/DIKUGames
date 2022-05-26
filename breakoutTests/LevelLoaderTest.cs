@@ -19,43 +19,38 @@ using DIKUArcade.Utilities;
 namespace breakoutTests;
 
 public class LevelLoaderTest {
-     private Breakout.LevelLoader levelTest;
+    private Breakout.LevelLoader levelTest;
     private EntityContainer<Block> blockContainerTest;
     private EntityContainer<Block> EmptyContainerTest;
 
     [SetUp]
 
-    public void Setup()
-    {
+    public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         levelTest = new LevelLoader();
     }
 
     [Test]
-    public void TestFillingBlockContainer()
-    {
+    public void TestFillingBlockContainer() {
 
         blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level2.txt");
-        Assert.AreNotEqual(blockContainerTest ,EmptyContainerTest);
+        Assert.AreNotEqual(blockContainerTest, EmptyContainerTest);
     }
-
     [Test]
-    public void TestMetaDataSaved()
-    {
-
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/levelTest.txt");
-        string SavedMetaData = levelTest.getmetaString();
-        Console.WriteLine(SavedMetaData);
-        Assert.AreEqual(SavedMetaData, levelTest.getmetaString());
+    public void LoadInvalidLevelTest() {
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level1992.txt");
+        Assert.AreEqual(blockContainerTest.CountEntities(), 0);
     }
-
     [Test]
-    public void TestLegendDataSaved()
-    {
-
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/levelTest.txt");
-        string[] SavedLegendData = levelTest.getlegendStringArray();
-        Assert.AreEqual(SavedLegendData, levelTest.getlegendStringArray());
+    public void LoadInvalidFileFormatTest() {
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/hola.txt");
+        Assert.AreEqual(blockContainerTest.CountEntities(), 0);
     }
+    [Test]
+    public void LoadWallTest() {
+        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/wall.txt");
+        Assert.AreNotEqual(blockContainerTest, EmptyContainerTest);
+    }
+
 
 }
