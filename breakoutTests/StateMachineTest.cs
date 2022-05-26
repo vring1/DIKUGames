@@ -33,6 +33,8 @@ public class StateMachineTest {
             Message = "MAIN_MENU"
         });
         Assert.AreEqual(stateMachine.ActiveState, MainMenu.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, GameRunning.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, GamePaused.GetInstance());
     }
 
     [Test]
@@ -44,6 +46,8 @@ public class StateMachineTest {
             Message = "GAME_RUNNING"
         });
         Assert.AreEqual(stateMachine.ActiveState, GameRunning.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, MainMenu.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, GamePaused.GetInstance());
     }
     [Test]
     public void ProcessEventAndSwitchStateTest3() {
@@ -54,5 +58,7 @@ public class StateMachineTest {
             Message = "GAME_PAUSED"
         });
         Assert.AreEqual(stateMachine.ActiveState, GamePaused.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, GameRunning.GetInstance());
+        Assert.AreNotEqual(stateMachine.ActiveState, MainMenu.GetInstance());
     }
 }
