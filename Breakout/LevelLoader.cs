@@ -97,7 +97,27 @@ public class LevelLoader {
                         string imageFile;
                         string DamagedImageFile;
                         imageFile = legendStringArray[j].Split(") ", StringSplitOptions.RemoveEmptyEntries)[1];
-                        imageFile = imageFile.Remove(imageFile.Length - 1);
+                        imageFile = imageFile.Remove(imageFile.Length);
+                        var imageFile2 = imageFile.Remove(imageFile.Length - 1);
+                        string fileExtimg = System.IO.Path.GetExtension(imageFile);
+                        string fileExtimg2 = System.IO.Path.GetExtension(imageFile2);
+
+                        if (fileExtimg2 == ".png") {
+                            imageFile = imageFile.Remove(imageFile.Length - 1);
+                        } else {
+                            imageFile = imageFile.Remove(imageFile.Length);
+                        }
+
+                        /*if (File.Exists(imageFile.Remove(imageFile.Length - 1))) {
+                            ;
+                        }*/
+                        /*else {
+                            (File.Exists(imageFile.Remove(imageFile.Length /*- 1
+                            imageFile = imageFile.Remove(imageFile.Length /*- 1);
+                        }*/
+
+
+
                         DamagedImageFile = imageFile.Remove(imageFile.Length - 4, 4) + "-damaged.png";
                         bool Unbreakable = false;
                         bool Hardened = false;

@@ -85,7 +85,6 @@ public class StateMachine : IGameEventProcessor {
                 break;
             default:
                 break;
-
                 //SwitchState should change the ActiveState field to the IGameState matching the input GameStateType. '
                 //As hinted by the fact that the StateMachine class implements the IGameEventProcessor interface, another method needs to be implemented as well.
         }

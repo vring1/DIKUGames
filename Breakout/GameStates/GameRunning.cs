@@ -68,10 +68,10 @@ namespace Breakout.GameStates {
             collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
             player.Move();
             score.UpdateScore();
-            /*if (blockContainer.CountEntities() == 0) {
+            if (blockContainer.CountEntities() == 0) {
                 blockContainer = new EntityContainer<Block>();
                 blockContainer = level.AddBlocks(@"Assets/Levels/level2.txt");
-            }*/
+            }
         }
         public EntityContainer<Ball> AddBalls() {
             EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
