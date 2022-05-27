@@ -15,6 +15,7 @@ using System;
 
 namespace Breakout {
     public class Hardened : Block {
+        Score score;
         private IBaseImage image {
             get; set;
         }
@@ -35,6 +36,7 @@ namespace Breakout {
             shape = new StationaryShape(Position, new Vec2F(0.083f, 0.04f));
             this.AltImage = altImage;
             this.HP = HP * 2;
+            score = Score.GetInstance();
         }
 
         public float GetThisPositionX() {
@@ -55,6 +57,8 @@ namespace Breakout {
         public override void DeleteBlock() {
             if (HP <= 0) {
                 DeleteEntity();
+                score.AddPoints();
+                score.AddPoints();
             }
         }
 
