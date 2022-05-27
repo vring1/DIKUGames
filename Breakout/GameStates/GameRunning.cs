@@ -68,10 +68,16 @@ namespace Breakout.GameStates {
             collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
             player.Move();
             score.UpdateScore();
-            /*if (blockContainer.CountEntities() == 0) {
-                blockContainer = new EntityContainer<Block>();
-                blockContainer = level.AddBlocks(@"Assets/Levels/level2.txt");
-            }*/
+            if (blockContainer.CountEntities() == 0) {
+                int count = 2;
+                var blockContainer2 = new EntityContainer<Block>();
+                //blockContainer.ClearContainer();
+                string file = (@"Assets/Levels/level" + count.ToString() + ".txt");
+                blockContainer2 = level.AddBlocks(file);
+                blockContainer = blockContainer2;
+                count++;
+                //InitializeGameState();
+            }
         }
         public EntityContainer<Ball> AddBalls() {
             EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
@@ -85,7 +91,7 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/levelTest.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
             ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png")));
