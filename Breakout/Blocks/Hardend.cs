@@ -27,7 +27,7 @@ namespace Breakout {
         private IBaseImage AltImage {
             get; set;
         }
-        private int HP {
+        public int HP {
             get; set;
         }
 
