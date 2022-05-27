@@ -35,7 +35,7 @@ public class UnbreakableTest {
     public void TestBlockHP() {
         int currHP = unbreakable.HP;
         unbreakable.isHit();
-        Assert.AreNotEqual(unbreakable.HP, currHP);
+        Assert.AreEqual(unbreakable.HP, currHP);
 
     }
 }
