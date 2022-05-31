@@ -16,6 +16,7 @@ namespace Breakout.GameStates {
         private Player player;
         private static GameRunning instance = null;
         private Score score;
+        private Life life;
         private GameEventBus eventBus;
         public Ball ball;
         public EntityContainer<Ball> ballContainer;
@@ -28,6 +29,7 @@ namespace Breakout.GameStates {
         public GameRunning() {
             //score = new Score(new Vec2F(0.9f, 0.5f), new Vec2F(0.45f, 0.45f));
             score = Score.GetInstance();
+            life = Life.GetInstance();
             //eventBus = new GameEventBus();
             //eventBus = new GameEventBus();
             //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
@@ -57,6 +59,7 @@ namespace Breakout.GameStates {
             blockContainer.RenderEntities();
             ballContainer.RenderEntities();
             score.RenderScore();
+            life.RenderLife();
         }
         public void ResetState() {
             player.ResetPosition();
@@ -68,6 +71,7 @@ namespace Breakout.GameStates {
             collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
             player.Move();
             score.UpdateScore();
+            life.UpdateLife();
             if (blockContainer.CountEntities() == 0) {
                 int count = 2;
                 var blockContainer2 = new EntityContainer<Block>();

@@ -22,7 +22,7 @@ namespace Breakout {
                 new Image(Path.Combine("Assets", "Images", "player.png")));
         float moveLeft = 0.0f;
         float moveRight = 0.0f;
-        const float MOVEMENT_SPEED = 0.01f;
+        const float MOVEMENT_SPEED = 0.015f;
         private Entity entity;
         private DynamicShape shape;
         public DynamicShape Shape {

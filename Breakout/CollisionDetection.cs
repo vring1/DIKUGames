@@ -15,6 +15,7 @@ using System.Diagnostics;
 
 namespace Breakout {
     public class CollisionDetect {
+        private Life life;
 
         public void BallDetec(EntityContainer<Ball> ballContainer, Player player, Ball ball,
             EntityContainer<Block> blockContainer, Vec2F pos) { //collision detection for the ball
@@ -53,6 +54,7 @@ namespace Breakout {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
                             block.DeleteBlock();
+
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirUp) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
@@ -76,6 +78,8 @@ namespace Breakout {
                 }
             });
             if (ballContainer.CountEntities() <= 0) {
+                life = Life.GetInstance();
+                life.DecreaseLife();
                 ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(player.Shape.AsDynamicShape().Position.X + 0.06f,
                 player.Shape.AsDynamicShape().Position.Y + 0.03f), new Vec2F(0.03f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
