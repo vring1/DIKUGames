@@ -31,7 +31,7 @@ namespace Breakout.GameStates {
         public GameWon() {
             gameWon = new Text("CONGRATULATIONS", new Vec2F(0.31f, 0.30f), new Vec2F(0.43f, 0.43f));
 
-            newGame = new Text("Player Again", new Vec2F(0.325f, 0.25f), new Vec2F(0.32f, 0.32f));
+            newGame = new Text("Play Again", new Vec2F(0.325f, 0.25f), new Vec2F(0.32f, 0.32f));
 
             exit = new Text("Exit", new Vec2F(0.435f, 0.1f), new Vec2F(0.4f, 0.35f));
             newGame.SetColor(System.Drawing.Color.Red);
@@ -78,7 +78,7 @@ namespace Breakout.GameStates {
                         BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
                             EventType = GameEventType.GameStateEvent,
-                            Message = "MAIN_MENU"
+                            Message = "GAME_RUNNING"
                         }
                     );
                     } else {
