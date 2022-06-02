@@ -17,7 +17,8 @@ public enum GameStateType {
     GAME_RUNNING,
     GAME_PAUSED,
     MAIN_MENU,
-    GAME_OVER
+    GAME_OVER,
+    GAME_WON
 }
 
 public class StateTransformer {
@@ -34,6 +35,9 @@ public class StateTransformer {
         if (state == "GAME_OVER") {
             return GameStateType.GAME_OVER;
         }
+        if (state == "GAME_WON") {
+            return GameStateType.GAME_OVER;
+        }
         throw new ArgumentException(String.Format("{0} is not a valid state", state));
 
     }
@@ -47,6 +51,9 @@ public class StateTransformer {
         }
         if (state == GameStateType.GAME_OVER) {
             return "GAME_OVER";
+        }
+        if (state == GameStateType.GAME_WON) {
+            return "GAME_WON";
         } else {
             return "MAIN_MENU";
         }

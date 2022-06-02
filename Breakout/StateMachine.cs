@@ -36,6 +36,8 @@ public class StateMachine : IGameEventProcessor {
         //ActiveState = GameRunning.GetInstance();
         GameRunning.GetInstance();
         GamePaused.GetInstance();
+        GameOver.GetInstance();
+        GameWon.GetInstance();
         ActiveState = MainMenu.GetInstance();
     }
     public static StateMachine GetInstance() {
@@ -70,6 +72,9 @@ public class StateMachine : IGameEventProcessor {
                 case "GAME_OVER":
                     SwitchState(StateTransformer.TransformStringToState(state));
                     break;
+                case "GAME_WON":
+                    SwitchState(StateTransformer.TransformStringToState(state));
+                    break;
                 default:
                     break;
             }
@@ -88,6 +93,9 @@ public class StateMachine : IGameEventProcessor {
                 break;
             case GameStateType.GAME_OVER:
                 ActiveState = GameOver.GetInstance();
+                break;
+            case GameStateType.GAME_WON:
+                ActiveState = GameWon.GetInstance();
                 break;
             default:
                 break;

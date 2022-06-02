@@ -83,21 +83,27 @@ namespace Breakout.GameStates {
                         }
                     );
             }
-            /*if (level.blockContainer.CountEntities() == 0) {
-                Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+            if (blockContainer.CountEntities() == 0) {
+                /*Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                     EventType = GameEventType.ControlEvent,
                     Message = "LEVEL_1"
-                });
-
-                int count = 2;
-                var blockContainer2 = new EntityContainer<Block>();
-                //blockContainer.ClearContainer();
-                string file = (@"Assets/Levels/level" + count.ToString() + ".txt");
-                blockContainer2 = level.AddBlocks(file);
-                blockContainer = blockContainer2;
-                count++;
-                //InitializeGameState();
-            }*/
+                });*/
+                int count = 7;
+                if (count < 7) {
+                    //var blockContainer2 = new EntityContainer<Block>();
+                    //blockContainer.ClearContainer();
+                    string file = (@"Assets/Levels/level" + count.ToString() + ".txt");
+                    //blockContainer2 = 
+                    blockContainer = level.AddBlocks(file);
+                    count++;
+                    //InitializeGameState();
+                } else {
+                    Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                        EventType = GameEventType.GameStateEvent,
+                        Message = "GAME_WON"
+                    });
+                }
+            }
         }
         public EntityContainer<Ball> AddBalls() {
             EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
@@ -111,7 +117,7 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/level6.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level5.txt");
             /*Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.ControlEvent,
                 Message = "LEVEL_1"

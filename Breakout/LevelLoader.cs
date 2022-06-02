@@ -75,6 +75,7 @@ public class LevelLoader {
     }
 
     public void MakeDictionary(Dictionary<string, string> dict) {
+        metaDict.Clear();
         for (int j = 1; j < metaStringArray.Length; j++) {
             string[] tempString = metaStringArray[j].Split(": ", StringSplitOptions.RemoveEmptyEntries);
             metaDict.Add(tempString[0], tempString[1][0].ToString());
