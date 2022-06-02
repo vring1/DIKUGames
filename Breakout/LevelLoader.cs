@@ -16,6 +16,7 @@ using System;
 namespace Breakout;
 public class LevelLoader {
 
+    private LevelLoader level;
     private string mapString;
     private string metaString;
     private string[] metaStringArray;
@@ -167,6 +168,22 @@ public class LevelLoader {
 
         return blockContainer;
     }
+    /*public void ProcessEvent(GameEvent gameEvent) {
+        if (gameEvent.EventType == GameEventType.ControlEvent) {
+            int control = 0;
+            var message = gameEvent.Message;
+            switch (message) {
+                case "LEVEL_1":
+                    //EntityContainer<Block> blockContainer1 = new EntityContainer<Block>();
+                    blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
+                    break;
+                default:
+                    break;
+            }
 
+            //skift level
+        }
+
+    }*/
 
 }

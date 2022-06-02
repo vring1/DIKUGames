@@ -83,7 +83,12 @@ namespace Breakout.GameStates {
                         }
                     );
             }
-            if (blockContainer.CountEntities() == 0) {
+            /*if (level.blockContainer.CountEntities() == 0) {
+                Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                    EventType = GameEventType.ControlEvent,
+                    Message = "LEVEL_1"
+                });
+
                 int count = 2;
                 var blockContainer2 = new EntityContainer<Block>();
                 //blockContainer.ClearContainer();
@@ -92,7 +97,7 @@ namespace Breakout.GameStates {
                 blockContainer = blockContainer2;
                 count++;
                 //InitializeGameState();
-            }
+            }*/
         }
         public EntityContainer<Ball> AddBalls() {
             EntityContainer<Ball> ballContainer = new EntityContainer<Ball>();
@@ -106,7 +111,11 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level6.txt");
+            /*Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
+                EventType = GameEventType.ControlEvent,
+                Message = "LEVEL_1"
+            });*/
             ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png")));

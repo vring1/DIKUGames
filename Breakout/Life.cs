@@ -19,9 +19,10 @@ namespace Breakout {
         private int count;
         private Text display;
         public Life(Vec2F position, Vec2F extent) {
-            count = 1;
+            count = 2;
             display = new Text(count.ToString(), position, extent);
-            display.SetColor(System.Drawing.Color.White);
+            display.SetColor(System.Drawing.Color.Yellow);
+
         }
         public void AddLife() {
             count++;
@@ -49,6 +50,9 @@ namespace Breakout {
 
         public void UpdateLife() {
             display.SetText(count.ToString());
+            if (count == 1) {
+                display.SetColor(System.Drawing.Color.Red);
+            }
         }
         public bool LifeIsZero() {
             if (this.count == 0) {
