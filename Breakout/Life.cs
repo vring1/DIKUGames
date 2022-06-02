@@ -36,10 +36,10 @@ namespace Breakout {
             }
         }
 
-        public bool IsLifeZero(Life currentlife){
-            if(currentlife.count != 0 && currentlife.count !<0){
+        public bool IsLifeZero(Life currentlife) {
+            if (currentlife.count != 0 && currentlife.count! < 0) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
@@ -49,6 +49,17 @@ namespace Breakout {
 
         public void UpdateLife() {
             display.SetText(count.ToString());
+        }
+        public bool LifeIsZero() {
+            if (this.count == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public void ResetLife() {
+            this.count = 1;
         }
     }
 

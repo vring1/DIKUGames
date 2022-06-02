@@ -42,6 +42,10 @@ namespace Breakout {
         public void UpdateScore() {
             display.SetText(count.ToString());
         }
+        public void ResetScore() {
+            this.count = 0;
+        }
+
     }
 
 }

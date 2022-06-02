@@ -63,6 +63,9 @@ namespace Breakout.GameStates {
         }
         public void ResetState() {
             player.ResetPosition();
+            life.ResetLife();
+            score.ResetScore();
+            //this.blockContainer.ClearContainer();
             //ball.ResetPosition();
         }
         public void UpdateState() {
@@ -72,6 +75,14 @@ namespace Breakout.GameStates {
             player.Move();
             score.UpdateScore();
             life.UpdateLife();
+            if (life.LifeIsZero()) {
+                BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent {
+                            EventType = GameEventType.GameStateEvent,
+                            Message = "GAME_OVER"
+                        }
+                    );
+            }
             if (blockContainer.CountEntities() == 0) {
                 int count = 2;
                 var blockContainer2 = new EntityContainer<Block>();

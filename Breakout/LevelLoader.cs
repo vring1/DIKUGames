@@ -24,6 +24,7 @@ public class LevelLoader {
     public int time;
     Dictionary<string, string> metaDict = new Dictionary<string, string>();
     Dictionary<string, string> metaTimeDict = new Dictionary<string, string>();
+    EntityContainer<Block> blockContainer = new EntityContainer<Block>();
 
     public static void GetLines(string path) {
         string[] readText = File.ReadAllLines(path);
@@ -81,7 +82,6 @@ public class LevelLoader {
 
     public EntityContainer<Block> AddBlocks(string path) {
         string fileExt = System.IO.Path.GetExtension(path);
-        EntityContainer<Block> blockContainer = new EntityContainer<Block>();
         if (File.Exists(path) && fileExt == ".txt") {
 
             FileToString(path);

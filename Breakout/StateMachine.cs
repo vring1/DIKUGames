@@ -67,6 +67,9 @@ public class StateMachine : IGameEventProcessor {
                 case "GAME_PAUSED":
                     SwitchState(StateTransformer.TransformStringToState(state));
                     break;
+                case "GAME_OVER":
+                    SwitchState(StateTransformer.TransformStringToState(state));
+                    break;
                 default:
                     break;
             }
@@ -82,6 +85,9 @@ public class StateMachine : IGameEventProcessor {
                 break;
             case GameStateType.GAME_PAUSED:
                 ActiveState = GamePaused.GetInstance();
+                break;
+            case GameStateType.GAME_OVER:
+                ActiveState = GameOver.GetInstance();
                 break;
             default:
                 break;
