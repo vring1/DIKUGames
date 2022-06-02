@@ -15,6 +15,7 @@ namespace Breakout.GameStates {
     public class GameOver : IGameState {
         private static GameOver? instance = null;
         private Entity backGroundImage;
+        private static Text gameOver;
         private static Text newGame; //= new Text("New Game",new Vec2F(0.1f,0.1f),new Vec2F(0.1f,0.1f) );
         private static Text exit; //= new Text("Quit Game",new Vec2F(0.2f,0.2f),new Vec2F(0.1f,0.1f) );
         private Text[] menuButtons = { newGame, exit };
@@ -28,15 +29,18 @@ namespace Breakout.GameStates {
         //private static GameRunning? gameRunning;
 
         public GameOver() {
-            newGame = new Text("Start New Game", new Vec2F(0.325f, 0.35f), new Vec2F(0.32f, 0.32f));
+            gameOver = new Text("GAME OVER", new Vec2F(0.31f, 0.30f), new Vec2F(0.43f, 0.43f));
 
-            exit = new Text("Exit", new Vec2F(0.45f, 0.2f), new Vec2F(0.4f, 0.35f));
+            newGame = new Text("Start New Game", new Vec2F(0.325f, 0.25f), new Vec2F(0.32f, 0.32f));
+
+            exit = new Text("Exit", new Vec2F(0.435f, 0.1f), new Vec2F(0.4f, 0.35f));
             newGame.SetColor(System.Drawing.Color.Red);
             exit.SetColor(System.Drawing.Color.Red);
+            gameOver.SetColor(System.Drawing.Color.Orange);
 
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.00f, 0.00f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
 
-            menuButtons = new Text[] { newGame, exit };
+            menuButtons = new Text[] { newGame, exit, gameOver };
 
             maxMenuButtons = menuButtons.Length;
         }
