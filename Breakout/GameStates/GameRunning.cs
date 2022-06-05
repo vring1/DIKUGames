@@ -95,8 +95,8 @@ namespace Breakout.GameStates {
                     EventType = GameEventType.ControlEvent,
                     Message = "LEVEL_1"
                 });*/
-                int count = 5;
-                if (count < 5) {
+                int count = 2;
+                if (count < 6) {
                     //var blockContainer2 = new EntityContainer<Block>();
                     //blockContainer.ClearContainer();
                     string file = (@"Assets/Levels/level" + count.ToString() + ".txt");
@@ -124,7 +124,7 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/level5.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
             /*Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.ControlEvent,
                 Message = "LEVEL_1"

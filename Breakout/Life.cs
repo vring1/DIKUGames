@@ -37,13 +37,6 @@ namespace Breakout {
             }
         }
 
-        public bool IsLifeZero(Life currentlife) {
-            if (currentlife.count != 0 && currentlife.count! < 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
         public void RenderLife() {
             display.RenderText();
         }

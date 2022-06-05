@@ -16,7 +16,7 @@ using Breakout.GameStates;
 namespace Breakout {
 
     public class Blocks : Block {
-        Score score;
+        private Score score;
         private IBaseImage image {
             get; set;
         }

@@ -48,14 +48,29 @@ public class GameRunningTest {
         Assert.AreEqual(player.GetPositionX(), 0.45f);
         Assert.AreEqual(player.GetPositionY(), 0.1f);
     }
+
+    [Test]
+    public void UpdateStateTest() {
+
+    }
+    [Test]
+    public void AddBallsTest() {
+
+    }
     [Test]
     public void InitializeGameStateTest() {
 
     }
     [Test]
-    public void UpdateState() {
+    public void HandleKeyEventTest() {
 
     }
+    [Test]
+    public void KeyPressTest() {
 
+    }
+    [Test]
+    public void KeyReleaseTest() {
 
+    }
 }
