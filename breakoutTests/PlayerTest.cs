@@ -126,7 +126,7 @@ public class PlayerTest {
             EventType = GameEventType.InputEvent,
             Message = "Release_Right"
         });
-        Assert.AreEqual(player.Shape.Direction.X, -0.01f);
+        Assert.Less(player.Shape.Direction.X, -0.001f);
     }
     [Test]
     public void ReleaseKeyTest() {

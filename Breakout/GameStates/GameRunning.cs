@@ -17,12 +17,12 @@ namespace Breakout.GameStates {
         private static GameRunning instance = null;
         private Score score;
         private Life life;
-        private GameEventBus eventBus;
-        public Ball ball;
-        public EntityContainer<Ball> ballContainer;
-        public int ballCount;
-        public LevelLoader level;
-        public EntityContainer<Block> blockContainer;
+        //private GameEventBus eventBus;
+        private Ball ball;
+        private EntityContainer<Ball> ballContainer;
+        private int ballCount;
+        private LevelLoader level;
+        private EntityContainer<Block> blockContainer;
 
         private CollisionDetect collisionDetection;
 
@@ -87,7 +87,7 @@ namespace Breakout.GameStates {
             if (score.Count == 50) {
                 Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                     EventType = GameEventType.GameStateEvent,
-                    Message = "GAME_WON"
+                    Message = "GAME_OVER"
                 });
             }
             if (blockContainer.CountEntities() == 0) {
@@ -95,8 +95,8 @@ namespace Breakout.GameStates {
                     EventType = GameEventType.ControlEvent,
                     Message = "LEVEL_1"
                 });*/
-                int count = 2;
-                if (count < 7) {
+                int count = 5;
+                if (count < 5) {
                     //var blockContainer2 = new EntityContainer<Block>();
                     //blockContainer.ClearContainer();
                     string file = (@"Assets/Levels/level" + count.ToString() + ".txt");
@@ -107,7 +107,7 @@ namespace Breakout.GameStates {
                 } else {
                     Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                         EventType = GameEventType.GameStateEvent,
-                        Message = "GAME_WON"
+                        Message = "GAME_OVER"
                     });
                 }
             }
@@ -124,7 +124,7 @@ namespace Breakout.GameStates {
             //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, player);
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
+            blockContainer = level.AddBlocks(@"Assets/Levels/level5.txt");
             /*Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.ControlEvent,
                 Message = "LEVEL_1"
