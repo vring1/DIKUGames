@@ -26,22 +26,34 @@ public class BlockTest {
         block = (new Blocks
                 (new Vec2F(0.5f, 0.5f),
                  new Image(Path.Combine
-                ("Assets", "Images", "blue-block.png")), new Image(Path.Combine("Assets", "Images", "blue-block.png")), 2));
+                ("Assets", "Images", "blue-block.png")), new Image(Path.Combine("Assets", "Images", "blue-block.png")), 1));
     }
 
     [Test]
     public void TestGetBlockPosition() {
-
         Vec2F blockPosition = new Vec2F(0.5f, 0.5f);
         Assert.AreEqual(block.GetThisPositionX(), blockPosition.X);
         Assert.AreEqual(block.GetThisPositionY(), blockPosition.Y);
     }
 
     [Test]
-    public void TestBlockHP() {
-        int currHP = block.HP;
+    public void IsUnbreakableTest() {
+        Assert.False(block.isUnbreakable());
+    }
+    [Test]
+    public void IsHitTest() {
         block.isHit();
-        Assert.AreNotEqual(block.HP, currHP);
-
+        Assert.AreEqual(block.HP, 0);
+    }
+    [Test]
+    public void DeleteBlockTest() {
+        block.isHit();
+        block.DeleteBlock();
+        Assert.True(block.IsDeleted());
+    }
+    [Test]
+    public void BlockIsOnlyDeletedWhenHpIs0Test() {
+        block.DeleteBlock();
+        Assert.False(block.IsDeleted());
     }
 }

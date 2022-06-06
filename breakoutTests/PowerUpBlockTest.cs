@@ -16,14 +16,14 @@ using System;
 
 namespace breakoutTests;
 
-public class UnbreakableTest {
-    private Breakout.Unbreakable block;
+public class PowerUpTest {
+    private Breakout.PowerupBlock block;
 
     [SetUp]
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
 
-        block = (new Unbreakable
+        block = (new PowerupBlock
                 (new Vec2F(0.5f, 0.5f),
                  new Image(Path.Combine
                 ("Assets", "Images", "blue-block.png")), new Image(Path.Combine("Assets", "Images", "blue-block.png")), 1));
@@ -38,21 +38,21 @@ public class UnbreakableTest {
 
     [Test]
     public void IsUnbreakableTest() {
-        Assert.True(block.isUnbreakable());
+        Assert.False(block.isUnbreakable());
     }
     [Test]
     public void IsHitTest() {
         block.isHit();
-        Assert.AreEqual(block.HP, 1);
+        Assert.AreEqual(block.HP, 0);
     }
     [Test]
-    public void CantDeleteBlockTest() {
+    public void DeleteBlockTest() {
         block.isHit();
-        block.isHit();
-        block.isHit();
-        block.isHit();
-        block.isHit();
-        block.isHit();
+        block.DeleteBlock();
+        Assert.True(block.IsDeleted());
+    }
+    [Test]
+    public void BlockIsOnlyDeletedWhenHpIs0Test() {
         block.DeleteBlock();
         Assert.False(block.IsDeleted());
     }

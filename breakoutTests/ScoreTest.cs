@@ -28,13 +28,13 @@ public class ScoreTest {
     [Test]
     public void AddPointsTest() {
         score.AddPoints();
-        Assert.AreEqual(score.Count, 1);
+        Assert.AreEqual(score.Count, 3);
     }
 
     [Test]
     public void DecreasePointsTest() {
         score.DecreasePoints();
-        Assert.AreEqual(score.Count, 0);
+        Assert.AreEqual(score.Count, 2);
     }
     [Test]
     public void ScoreWillAlwaysBePositiveTest() {
