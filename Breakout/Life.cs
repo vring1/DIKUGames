@@ -17,6 +17,11 @@ namespace Breakout {
     public class Life {
         private static Life instance = new Life(new Vec2F(0.1f, 0.5f), new Vec2F(0.45f, 0.45f));
         private int count;
+        public int Count {
+            get {
+                return count;
+            }
+        }
         private Text display;
         public Life(Vec2F position, Vec2F extent) {
             count = 2;
