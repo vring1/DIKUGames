@@ -19,34 +19,40 @@ using DIKUArcade.Utilities;
 namespace breakoutTests;
 
 public class LevelTest {
+    LevelLoader level;
+    LevelLoader level5;
     [SetUp]
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
+        level = new LevelLoader();
+        level5 = new LevelLoader();
+        var projectPath = FileIO.GetProjectPath();
+        level.FileToString(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
+        level5.FileToString(Path.Combine(projectPath, "Assets", "Levels", "level5.txt"));
     }
 
     [Test]
-    public void TestMeta() {
-        //Assert.Pass();
-        var projectPath = FileIO.GetProjectPath();
-        //Level testLevel = new Level(Path.Combine("../", "../", "../", "Assets", "Levels", "level1.txt"));
-        Level testLevel = new Level(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
-        Assert.AreEqual(testLevel.GetMetaData("Name"), "LEVEL 1");
-        Assert.AreEqual(testLevel.GetMetaData("Time"), "300");
-        Assert.AreEqual(testLevel.GetMetaData("Hardened"), "#");
-        Assert.AreEqual(testLevel.GetMetaData("PowerUp"), "2");
+    public void TestMetaData() {
+        Assert.AreEqual(level.getmetaString(), "\r\nName: LEVEL 1\r\nTime: 300\r\nHardened: #\r\nPowerUp: 2\r\n");
     }
 
     [Test]
-    public void TestLegend() {
-        var projectPath = FileIO.GetProjectPath();
-        //Level testLevel = new Level(Path.Combine("../", "../", "../", "Assets", "Levels", "level1.txt"));
-        Level testLevel = new Level(Path.Combine(projectPath, "Assets", "Levels", "level1.txt"));
-        Assert.AreEqual(testLevel.GetLegendData("%"), "blue-block.png");
-        Assert.AreEqual(testLevel.GetLegendData("0"), "grey-block.png");
-        Assert.AreEqual(testLevel.GetLegendData("1"), "orange-block.png");
-        Assert.AreEqual(testLevel.GetLegendData("a"), "purple-block.png");
+    public void TestLegendData() {
+        Assert.AreEqual(level.getlegendString(), "\r\n%) blue-block.png\r\n0) grey-block.png\r\n1) orange-block.png\r\na) purple-block.png\r\n");
     }
 
-
-
+    [Test]
+    public void TestMapData() {
+        Assert.AreEqual(level5.getmapString(), "\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n-----a------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n------------\n");
+    }
+    [Test]
+    public void InvalidatorTrueTest() {
+        var projectPath = FileIO.GetProjectPath();
+        Assert.True(LevelLoader.Invalidator(Path.Combine(projectPath, "Assets", "Levels", "level1.txt")));
+    }
+    [Test]
+    public void InvalidatorFalseTest() {
+        var projectPath = FileIO.GetProjectPath();
+        Assert.False(LevelLoader.Invalidator(Path.Combine(projectPath, "Assets", "Levels", "hola.pdf")));
+    }
 }

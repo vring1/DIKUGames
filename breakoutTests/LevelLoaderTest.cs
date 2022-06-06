@@ -19,9 +19,8 @@ using DIKUArcade.Utilities;
 namespace breakoutTests;
 
 public class LevelLoaderTest {
-    private Breakout.LevelLoader levelTest;
-    private EntityContainer<Block> blockContainerTest;
-    private EntityContainer<Block> EmptyContainerTest;
+    LevelLoader levelTest;
+    EntityContainer<Block> blockContainerTest = new EntityContainer<Block>();
 
     [SetUp]
 
@@ -32,24 +31,39 @@ public class LevelLoaderTest {
 
     [Test]
     public void TestFillingBlockContainer() {
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level2.txt");
-        Assert.AreNotEqual(blockContainerTest, EmptyContainerTest);
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "level2.txt"));
+        Assert.AreEqual(blockContainerTest.CountEntities(), 72);
     }
     [Test]
-    public void LoadInvalidLevelTest() {
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/level1992.txt");
+    public void LoadFileThatDoesntExistTest() {
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "level19921.txt"));
         Assert.AreEqual(blockContainerTest.CountEntities(), 0);
     }
     [Test]
     public void LoadInvalidFileFormatTest() {
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/hola.txt");
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "hola.pdf"));
         Assert.AreEqual(blockContainerTest.CountEntities(), 0);
     }
     [Test]
     public void LoadWallTest() {
-        blockContainerTest = levelTest.AddBlocks(@"Assets/Levels/wall.txt");
-        Assert.AreNotEqual(blockContainerTest, EmptyContainerTest);
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "wall.txt"));
+        Assert.AreEqual(blockContainerTest.CountEntities(), 144);
     }
-
+    [Test]
+    public void LoadUnbreakableLevel() {
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "level4.txt"));
+        Assert.AreEqual(blockContainerTest.CountEntities(), 16);
+    }
+    [Test]
+    public void LoadHardenedLevel() {
+        var projectPath = FileIO.GetProjectPath();
+        blockContainerTest = levelTest.AddBlocks(Path.Combine(projectPath, "Assets", "Levels", "level6.txt"));
+        Assert.AreEqual(blockContainerTest.CountEntities(), 76);
+    }
 
 }

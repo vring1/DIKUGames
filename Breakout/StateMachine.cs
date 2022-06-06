@@ -60,16 +60,21 @@ public class StateMachine : IGameEventProcessor {
             switch (state) {
                 case "GAME_RUNNING":
                     SwitchState(StateTransformer.TransformStringToState(state));
-                    //ActiveState.ResetState();
                     break;
                 case "MAIN_MENU":
-                    SwitchState(StateTransformer.TransformStringToState(state));
+                    if (ActiveState == GamePaused.GetInstance()) {
+                        SwitchState(StateTransformer.TransformStringToState(state));
+                    }
                     break;
                 case "GAME_PAUSED":
-                    SwitchState(StateTransformer.TransformStringToState(state));
+                    if (ActiveState == GameRunning.GetInstance()) {
+                        SwitchState(StateTransformer.TransformStringToState(state));
+                    }
                     break;
                 case "GAME_OVER":
-                    SwitchState(StateTransformer.TransformStringToState(state));
+                    if (ActiveState == GameRunning.GetInstance()) {
+                        SwitchState(StateTransformer.TransformStringToState(state));
+                    }
                     break;
                 default:
                     break;

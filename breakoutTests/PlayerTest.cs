@@ -47,7 +47,13 @@ public class PlayerTest {
         Assert.AreEqual(player.GetPosition().X, somePosition.X);
         Assert.AreEqual(player.GetPosition().Y, somePosition.Y);
     }
-
+    [Test]
+    public void ResetPositionTest() {
+        player.ResetPosition();
+        Vec2F somePosition = new Vec2F(0.45f, 0.1f);
+        Assert.AreEqual(player.GetPosition().X, somePosition.X);
+        Assert.AreEqual(player.GetPosition().Y, somePosition.Y);
+    }
     [Test]
     public void MoveLeftTest() {
         var currPos = player.GetPosition();
@@ -70,7 +76,7 @@ public class PlayerTest {
         //Assert.Greater(player.Shape.Position.X, currPos.X);
         Assert.AreEqual(currPos.Y, player.Shape.Position.Y);
         //Assert.True(MathF.Abs(player.Shape.Position.X - currPos.X) < 1e-6);
-        Assert.AreEqual(player.Shape.Position.X, player.Shape.Position.X);
+        Assert.AreEqual(player.Shape.Position.X, currPos.X);
     }
 
     [Test]

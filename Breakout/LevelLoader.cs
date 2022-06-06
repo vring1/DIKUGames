@@ -27,14 +27,6 @@ public class LevelLoader {
     Dictionary<string, string> metaTimeDict = new Dictionary<string, string>();
     EntityContainer<Block> blockContainer = new EntityContainer<Block>();
 
-    public static void GetLines(string path) {
-        string[] readText = File.ReadAllLines(path);
-        foreach (string s in readText) {
-            // Printing the string array containing
-            // all lines of the file.
-        }
-    }
-
     public static bool Invalidator(string path) {
         string readText = File.ReadAllText(path);
         if (readText.Contains("Map:") && readText.Contains("Map/")
@@ -69,7 +61,9 @@ public class LevelLoader {
     public string getmetaString() {
         return metaString;
     }
-
+    public string getlegendString() {
+        return legend;
+    }
     public string[] getlegendStringArray() {
         return legendStringArray;
     }
@@ -109,16 +103,6 @@ public class LevelLoader {
                         } else {
                             imageFile = imageFile.Remove(imageFile.Length);
                         }
-
-                        /*if (File.Exists(imageFile.Remove(imageFile.Length - 1))) {
-                            ;
-                        }*/
-                        /*else {
-                            (File.Exists(imageFile.Remove(imageFile.Length /*- 1
-                            imageFile = imageFile.Remove(imageFile.Length /*- 1);
-                        }*/
-
-
 
                         DamagedImageFile = imageFile.Remove(imageFile.Length - 4, 4) + "-damaged.png";
                         bool Unbreakable = false;
