@@ -20,38 +20,29 @@ namespace breakoutTests;
 public class GameOverTest {
 
 
+    StateMachine stateMachine;
+    //GameEventBus eventBus;
+    GameOver gameOver;
+
     [SetUp]
     public void Setup() {
-
+        DIKUArcade.GUI.Window.CreateOpenGLContext();
+        /*eventBus = new GameEventBus();
+        eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.GameStateEvent, GameEventType.InputEvent });
+        eventBus.Subscribe(GameEventType.InputEvent, stateMachine);
+        eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);*/
+        stateMachine = StateMachine.GetInstance();
+        gameOver = GameOver.GetInstance();
     }
-    /*public void ResetState() {
-                player.ResetPosition();
-                life.ResetLife();
-                score.ResetScore();
-                InitializeGameState();
-                //this.blockContainer.ClearContainer();
-                //ball.ResetPosition();
-            }*/
-    [Test]
+    /*[Test]
     public void HandleKeyEventTest() {
-
-    }
-    [Test]
-    public void ResetStateTest() {
-
-    }
-
-    [Test]
-    public void UpdateStateTest() {
-
-    }
-    [Test]
-    public void AddBallsTest() {
-
-    }
-    [Test]
-    public void InitializeGameStateTest() {
-
-    }
+        stateMachine.ProcessEvent(new GameEvent {
+            EventType = GameEventType.GameStateEvent,
+            Message = "GAME_OVER"
+        });
+        gameOver.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Up);
+        gameOver.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
+        Assert.AreEqual(stateMachine.ActiveState, GameRunning.GetInstance());
+    }*/
 
 }

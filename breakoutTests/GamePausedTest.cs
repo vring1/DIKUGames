@@ -20,38 +20,39 @@ namespace breakoutTests;
 public class GamePausedTest {
 
 
+    StateMachine stateMachine;
+    //GameEventBus eventBus;
+    GamePaused gamePaused;
+
     [SetUp]
     public void Setup() {
-
-    }
-    /*public void ResetState() {
-                player.ResetPosition();
-                life.ResetLife();
-                score.ResetScore();
-                InitializeGameState();
-                //this.blockContainer.ClearContainer();
-                //ball.ResetPosition();
-            }*/
-    [Test]
-    public void HandleKeyEventTest() {
-
-    }
-    [Test]
-    public void ResetStateTest() {
-
+        DIKUArcade.GUI.Window.CreateOpenGLContext();
+        /*eventBus = new GameEventBus();
+        eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.GameStateEvent, GameEventType.InputEvent });
+        eventBus.Subscribe(GameEventType.InputEvent, stateMachine);
+        eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);*/
+        stateMachine = StateMachine.GetInstance();
+        gamePaused = GamePaused.GetInstance();
     }
 
-    [Test]
-    public void UpdateStateTest() {
-
+    /*[Test]
+    public void HandleKeyEventMainMenuTest() {
+        stateMachine.ProcessEvent(new GameEvent {
+            EventType = GameEventType.GameStateEvent,
+            Message = "GAME_PAUSED"
+        });
+        gamePaused.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Up);
+        gamePaused.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
+        Assert.AreEqual(stateMachine.ActiveState, MainMenu.GetInstance());
     }
     [Test]
-    public void AddBallsTest() {
-
-    }
-    [Test]
-    public void InitializeGameStateTest() {
-
-    }
-
+    public void HandleKeyEventGameRunningTest() {
+        stateMachine.ProcessEvent(new GameEvent {
+            EventType = GameEventType.GameStateEvent,
+            Message = "GAME_PAUSED"
+        });
+        gamePaused.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Down);
+        gamePaused.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
+        Assert.AreEqual(stateMachine.ActiveState, GameRunning.GetInstance());
+    }*/
 }

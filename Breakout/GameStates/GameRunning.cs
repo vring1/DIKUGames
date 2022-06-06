@@ -17,7 +17,6 @@ namespace Breakout.GameStates {
         private static GameRunning instance = null;
         private Score score;
         private Life life;
-        //private GameEventBus eventBus;
         private Ball ball;
         private EntityContainer<Ball> ballContainer;
         private int ballCount;
@@ -136,16 +135,14 @@ namespace Breakout.GameStates {
             //LevelLoader.LoadLevel(Path.Combine("Assets", "Levels", "level4.txt"));
         }
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            System.Console.WriteLine("HandleKeyEvent");
             if (action == KeyboardAction.KeyPress) {
-                System.Console.WriteLine("keypress");
                 KeyPress(key);
             }
             if (action == KeyboardAction.KeyRelease) {
                 KeyRelease(key);
             }
         }
-        public void KeyPress(KeyboardKey key) {
+        private void KeyPress(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
                     Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {
@@ -164,7 +161,7 @@ namespace Breakout.GameStates {
             }
         }
 
-        public void KeyRelease(KeyboardKey key) {
+        private void KeyRelease(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
                     Breakout.BreakoutBus.GetBus().RegisterEvent(new GameEvent {

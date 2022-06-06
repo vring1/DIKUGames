@@ -78,8 +78,7 @@ namespace Breakout.GameStates {
         }
 
 
-        public void RenderState(
-        ) {
+        public void RenderState() {
             backGroundImage.RenderEntity();
             foreach (Text menuButton in this.menuButtons) {
                 menuButton.RenderText();
