@@ -7,7 +7,6 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 
@@ -33,6 +32,12 @@ namespace Breakout.GameStates {
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.00f, 0.00f), new Vec2F(1.0f, 1.0f)), new Image(Path.Combine("Assets", "Images", "BreakoutTitleScreen.png")));
 
         }
+        /// <summary> 
+        /// Creates an instance of GameOver if it doesn't already exit 
+        /// <summary>
+        /// <returns> 
+        /// The GamePaused instance. 
+        /// <returns>
 
         public static GamePaused GetInstance() {
             if (GamePaused.instance == null) {
@@ -42,9 +47,13 @@ namespace Breakout.GameStates {
             }
             return GamePaused.instance;
         }
-
+        /// <summary>
+        /// Handles when a specific key is pressed.
+        /// </summary>
+        /// <param name="action">the action of pressing key</param>
+        /// <param name="key">the specific key that was pressed</param>
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            if (action == KeyboardAction.KeyPress /*|| action == KeyboardAction.KeyRelease*/) {
+            if (action == KeyboardAction.KeyPress) {
                 if (key == KeyboardKey.Down) {
                     mainMenu.SetColor(System.Drawing.Color.Green);
                     resume.SetColor(System.Drawing.Color.Red);
@@ -72,12 +81,12 @@ namespace Breakout.GameStates {
                     );
                     }
                 }
-                // else: do nothing... 
             }
-
         }
 
-
+        /// <summary>
+        /// Renders the acquired buttons and backgroundimage for GamePaused.
+        /// </summary>
         public void RenderState() {
             backGroundImage.RenderEntity();
             foreach (Text menuButton in this.menuButtons) {
@@ -91,8 +100,7 @@ namespace Breakout.GameStates {
 
         }
         public void InitializeGameState() {
-            //RenderState();
-            //UpdateState();
+
         }
 
     }

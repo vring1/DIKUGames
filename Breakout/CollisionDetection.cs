@@ -16,9 +16,16 @@ using System.Diagnostics;
 namespace Breakout {
     public class CollisionDetect {
         private Life life;
-
+        /// <summary>
+        /// Detects the ball collides with anything.
+        /// </summary>
+        /// <param name="ballContainer"> the container with the ball(s)</param>
+        /// <param name="player">the player instance</param>
+        /// <param name="ball">the ball which collides with the other parameters</param>
+        /// <param name="blockContainer">the container with blocks</param>
+        /// <param name="pos">The position of the ball(s)</param>
         public void BallDetec(EntityContainer<Ball> ballContainer, Player player, Ball ball,
-            EntityContainer<Block> blockContainer, Vec2F pos) { //collision detection for the ball
+            EntityContainer<Block> blockContainer, Vec2F pos) {
             ballContainer.Iterate(ballz => {
                 ballz.shape.Move();
                 if (ballz.Shape.Position.Y < 0) {

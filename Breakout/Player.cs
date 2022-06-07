@@ -6,13 +6,8 @@ using System.IO;
 using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using DIKUArcade.GUI;
-//using DIKUArcade;
-
-
-
 
 namespace Breakout {
     public class Player : IGameEventProcessor {
@@ -35,17 +30,28 @@ namespace Breakout {
             entity = new Entity(shape, image);
             this.shape = shape;
         }
-
+        /// <summary>
+        /// Returns the instance field of the Player class.
+        /// </summary>
+        /// <returns> the instance of the Player</returns>
         public static Player GetInstance() {
             return instance;
         }
+        /// <summary>
+        /// Resets the position of the player to the default place.
+        /// </summary>
         public void ResetPosition() {
             this.shape.Position.X = 0.45f;
         }
+        /// <summary>
+        /// Updates the direction in which the player is able to move.
+        /// </summary>
         private void UpdateDirection() {
             this.shape.Direction.X = moveRight + moveLeft;
         }
-
+        /// <summary>
+        /// Moves the player in the direction from UpdateDirection().
+        /// </summary>
         public void Move() {
             shape.Move();
             if (this.shape.Position.X <= 0) {
@@ -56,7 +62,10 @@ namespace Breakout {
             }
         }
 
-
+        /// <summary>
+        /// Sets the field moveLeft to a specific value depending on a bool.
+        /// </summary>
+        /// <param name="val"> bool for setting the moveLeft field.</param>
         private void SetMoveLeft(bool val) {
             if (val == true) {
                 this.moveLeft = -MOVEMENT_SPEED;
@@ -64,9 +73,11 @@ namespace Breakout {
                 this.moveLeft = 0.0f;
             }
             UpdateDirection();
-            // TODO: set moveLeft appropriately and call UpdateMovement()
-
         }
+        /// <summary>
+        /// Sets the field moveRight to a specific value depending on a bool.
+        /// </summary>
+        /// <param name="val"> bool for setting the moveRight field.</param>
         private void SetMoveRight(bool val) {
             if (val == true) {
                 this.moveRight = MOVEMENT_SPEED;
@@ -74,25 +85,39 @@ namespace Breakout {
                 this.moveRight = 0.0f;
             }
             UpdateDirection();
-            // TODO:set moveRight appropriately and call UpdateMovement()
         }
+        /// <summary>
+        /// Renders the player.
+        /// </summary>
         public void Render() {
             this.entity.RenderEntity();
 
         }
-
+        /// <summary>
+        /// Returns the position of the player at the moment.
+        /// </summary>
+        /// <returns>the position of the player</returns>
         public Vec2F GetPosition() {
             return this.shape.Position;
         }
-
+        /// <summary>
+        /// finds the x-coordinate corresponding to the player's position.
+        /// </summary>
+        /// <returns>the x-coordiante of the player's position</returns>
         public float GetPositionX() {
             return this.shape.Position.X;
         }
-
+        /// <summary>
+        /// finds the y-coordinate corresponding to the player's position.
+        /// </summary>
+        /// <returns>the y-coordiante of the player's position</returns>
         public float GetPositionY() {
             return this.shape.Position.Y;
         }
-
+        /// <summary>
+        /// Processes an event by switching on the message from the registered event.
+        /// </summary>
+        /// <param name="gameEvent"> a specfic registered GameEvent</param>
         public void ProcessEvent(GameEvent gameEvent) {
 
             if (gameEvent.EventType == GameEventType.InputEvent) {

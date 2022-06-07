@@ -41,29 +41,47 @@ namespace Breakout {
             score = Score.GetInstance();
 
         }
+        /// <summary>
+        /// finds the x-coordinate corresponding to the block's position.
+        /// </summary>
+        /// <returns>the x-coordiante of the block's position</returns>
         public float GetThisPositionX() {
             return shape.Position.X;
         }
-
+        /// <summary>
+        /// finds the y-coordinate corresponding to the block's position.
+        /// </summary>
+        /// <returns>the y-coordiante of the block's position</returns>
         public float GetThisPositionY() {
             return shape.Position.Y;
         }
+        /// <summary>
+        /// checks if a block is unbreakable.
+        /// </summary>
+        /// <returns>true if the block is unbreakable, otherwise false</returns>
         public override bool isUnbreakable() {
             return false;
         }
-
+        /// <summary>
+        /// Decrements the HP of the block in an appropriate manor.
+        /// </summary>
         public override void isHit() {
             if (HP > 0) {
                 HP = HP - 1;
             }
         }
-
+        /// <summary>
+        /// Deletes the block.
+        /// </summary>
         public override void DeleteBlock() {
             if (HP <= 0) {
                 DeleteEntity();
                 score.AddPoints();
             }
         }
+        /// <summary>
+        /// Renders the block.
+        /// </summary>
         public override void Render() {
             if (!IsDeleted()) {
                 image.Render(shape);

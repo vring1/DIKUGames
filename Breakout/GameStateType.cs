@@ -7,10 +7,8 @@ using System.IO;
 using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using DIKUArcade.GUI;
-//using DIKUArcade;
 namespace Breakout;
 
 public enum GameStateType {
@@ -21,6 +19,11 @@ public enum GameStateType {
 }
 
 public class StateTransformer {
+    /// <summary>
+    /// Transforms a string into it's corresponding GameStateType.
+    /// </summary>
+    /// <param name="state">a string in the form of a specific GameStateType</param>
+    /// <returns></returns>
     public static GameStateType TransformStringToState(string state) {
         if (state == "GAME_RUNNING") {
             return GameStateType.GAME_RUNNING;
@@ -37,7 +40,11 @@ public class StateTransformer {
         throw new ArgumentException(String.Format("{0} is not a valid state", state));
 
     }
-
+    /// <summary>
+    /// Transforms a GameStateType into a string.
+    /// </summary>
+    /// <param name="state">a specific GameStateType to be changed into a string</param>
+    /// <returns></returns>
     public static string TransformStateToString(GameStateType state) {
         if (state == GameStateType.GAME_RUNNING) {
             return "GAME_RUNNING";
@@ -50,6 +57,5 @@ public class StateTransformer {
         } else {
             return "MAIN_MENU";
         }
-        //throw new ArgumentException(String.Format("{0} is not a valid state", state));
     }
 }

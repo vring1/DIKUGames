@@ -8,55 +8,35 @@ using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using System;
 using DIKUArcade.State;
-//using Breakout.GameStates;
 
 namespace Breakout.GameStates;
 public class StateMachine : IGameEventProcessor {
     public IGameState ActiveState {
         get; private set;
     }
-    //private GameEventBus eventBus;
     private static StateMachine instance = new StateMachine();
     public StateMachine() {
-        //eventBus = new GameEventBus();
-        //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
-        /*BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-            GameEventType.InputEvent,
-            GameEventType.GameStateEvent,
-            GameEventType.PlayerEvent
-         });*/
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-        BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-        BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
-        //IGameState ActiveState = MainMenu.GetInstance();
-        //ActiveState = GameRunning.GetInstance();
-        GameRunning.GetInstance();
-        GamePaused.GetInstance();
-        GameOver.GetInstance();
         ActiveState = MainMenu.GetInstance();
     }
+    /// <summary>
+    /// Returns the instance field from the Statemachine class.
+    /// </summary>
+    /// <returns> The instance of Statemachine</returns>
     public static StateMachine GetInstance() {
         return instance;
     }
-    /*public void RenderState() {
-        //eventBus.ProcessEventsSequentially();
-        ActiveState.RenderState();
-    }
-    public void UpdateState() {
-        System.Console.WriteLine("hej5");
-        //eventBus.ProcessEventsSequentially();
-        ActiveState.UpdateState();
-        System.Console.WriteLine("hej6");
-    }*/
+    /// <summary>
+    /// Processes an event by switching on the message from the registered event.
+    /// </summary>
+    /// <param name="gameEvent"> a specific registered GameEvent</param>
 
     public void ProcessEvent(GameEvent gameEvent) {
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             var state = gameEvent.Message;
-            //this.SwitchState(StateTransformer.TransformStringToState(state));
             switch (state) {
                 case "GAME_RUNNING":
                     SwitchState(StateTransformer.TransformStringToState(state));
@@ -81,6 +61,10 @@ public class StateMachine : IGameEventProcessor {
             }
         }
     }
+    /// <summary>
+    /// Updates the ActiveState to the instance equivalent to the GameStateType.
+    /// </summary>
+    /// <param name="stateType"> a specific GameStateType</param>
     private void SwitchState(GameStateType stateType) {
         switch (stateType) {
             case GameStateType.MAIN_MENU:
@@ -97,8 +81,6 @@ public class StateMachine : IGameEventProcessor {
                 break;
             default:
                 break;
-                //SwitchState should change the ActiveState field to the IGameState matching the input GameStateType. '
-                //As hinted by the fact that the StateMachine class implements the IGameEventProcessor interface, another method needs to be implemented as well.
         }
     }
 }

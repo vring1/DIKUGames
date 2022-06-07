@@ -8,7 +8,6 @@ using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using System;
 
@@ -26,7 +25,11 @@ public class LevelLoader {
     Dictionary<string, string> metaDict = new Dictionary<string, string>();
     Dictionary<string, string> metaTimeDict = new Dictionary<string, string>();
     EntityContainer<Block> blockContainer = new EntityContainer<Block>();
-
+    /// <summary>
+    /// Checks if a certain file actually has the required aspects of being a level.
+    /// </summary>
+    /// <param name="path">a filepath</param>
+    /// <returns></returns>
     public static bool Invalidator(string path) {
         string readText = File.ReadAllText(path);
         if (readText.Contains("Map:") && readText.Contains("Map/")
@@ -36,7 +39,10 @@ public class LevelLoader {
         }
         return false;
     }
-
+    /// <summary>
+    /// Given a filepath, the different fields will be filled with a string containing the information corresponding.
+    /// </summary>
+    /// <param name="path">a filepath</param>
     public void FileToString(string path) {
         string levelPath = Path.Combine(DIKUArcade.Utilities.FileIO.GetProjectPath(), path);
 
@@ -53,21 +59,38 @@ public class LevelLoader {
         legendStringArray = legend.Split("\n", StringSplitOptions.RemoveEmptyEntries);
         MakeDictionary(metaDict);
     }
-
+    /// <summary>
+    /// returns the field which was filled in FileToString().
+    /// </summary>
+    /// <returns>the map data as a string</returns>
     public string getmapString() {
         return mapString;
     }
-
+    /// <summary>
+    /// returns the field which was filled in FileToString().
+    /// </summary>
+    /// <returns>the meta data as a string</returns>
     public string getmetaString() {
         return metaString;
     }
+    /// <summary>
+    /// returns the field which was filled in FileToString().
+    /// </summary>
+    /// <returns>the legend data as a string</returns>
     public string getlegendString() {
         return legend;
     }
+    /// <summary>
+    /// returns the field which was filled in FileToString().
+    /// </summary>
+    /// <returns>the legend data as a string array</returns>
     public string[] getlegendStringArray() {
         return legendStringArray;
     }
-
+    /// <summary>
+    /// Fills a dictionary with corresponding data.
+    /// </summary>
+    /// <param name="dict">the dictionary to be filled</param>
     public void MakeDictionary(Dictionary<string, string> dict) {
         metaDict.Clear();
         for (int j = 1; j < metaStringArray.Length; j++) {
@@ -75,7 +98,11 @@ public class LevelLoader {
             metaDict.Add(tempString[0], tempString[1][0].ToString());
         }
     }
-
+    /// <summary>
+    /// Adds blocks to a EntityContainer given a filepath.
+    /// </summary>
+    /// <param name="path">the filepath</param>
+    /// <returns></returns>
     public EntityContainer<Block> AddBlocks(string path) {
         string fileExt = System.IO.Path.GetExtension(path);
         if (File.Exists(path) && fileExt == ".txt") {
@@ -153,22 +180,5 @@ public class LevelLoader {
 
         return blockContainer;
     }
-    /*public void ProcessEvent(GameEvent gameEvent) {
-        if (gameEvent.EventType == GameEventType.ControlEvent) {
-            int control = 0;
-            var message = gameEvent.Message;
-            switch (message) {
-                case "LEVEL_1":
-                    //EntityContainer<Block> blockContainer1 = new EntityContainer<Block>();
-                    blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
-                    break;
-                default:
-                    break;
-            }
-
-            //skift level
-        }
-
-    }*/
 
 }

@@ -7,7 +7,6 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 
@@ -16,17 +15,11 @@ namespace Breakout.GameStates {
         private static GameOver? instance = null;
         private Entity backGroundImage;
         private static Text gameOver;
-        private static Text newGame; //= new Text("New Game",new Vec2F(0.1f,0.1f),new Vec2F(0.1f,0.1f) );
-        private static Text exit; //= new Text("Quit Game",new Vec2F(0.2f,0.2f),new Vec2F(0.1f,0.1f) );
+        private static Text newGame;
+        private static Text exit;
         private Text[] menuButtons = { newGame, exit };
         private int activeMenuButton;
         private int maxMenuButtons;
-        //private StationaryShape shape;
-        /*public GameOver(StationaryShape shape, IBaseImage image) {
-            backGroundImage = new Entity(shape, image);
-            this.shape = shape;
-        }*/
-        //private static GameRunning? gameRunning;
 
         public GameOver() {
             gameOver = new Text("GAME OVER", new Vec2F(0.31f, 0.30f), new Vec2F(0.43f, 0.43f));
@@ -45,22 +38,27 @@ namespace Breakout.GameStates {
             maxMenuButtons = menuButtons.Length;
         }
 
+        /// <summary> 
+        /// Creates an instance of GameOver if it doesn't already exit 
+        /// <summary>
+        /// <returns> 
+        /// The GameOver instance. 
+        /// <returns>
         public static GameOver GetInstance() {
             if (GameOver.instance == null) {
                 GameOver.instance = new GameOver();
-                //new StationaryShape(new Vec2F(0.5f, 0.5f), new Vec2F(0.9f, 0.9f)),
-                //new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
-                //new Image(Path.GetFullPath(Path.Combine("Assets", "Images", "TitleImage.png")).Replace("galagaTest", "Galaga")));
-                //new Image(Path.Combine("../", "Assets", "Images", "TitleImage.png")));
                 GameOver.instance.InitializeGameState();
             }
             return GameOver.instance;
         }
 
-
-
+        /// <summary>
+        /// Handles when a specific key is pressed.
+        /// </summary>
+        /// <param name="action">the action of pressing key</param>
+        /// <param name="key">the specific key that was pressed</param>
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            if (action == KeyboardAction.KeyPress /*|| action == KeyboardAction.KeyRelease*/) {
+            if (action == KeyboardAction.KeyPress) {
                 if (key == KeyboardKey.Down) {
                     exit.SetColor(System.Drawing.Color.Green);
                     newGame.SetColor(System.Drawing.Color.Red);
@@ -73,7 +71,6 @@ namespace Breakout.GameStates {
                 }
                 if (key == KeyboardKey.Enter) {
                     if (activeMenuButton == 0) {
-                        // RESET STATE FOR GAME RUNNING
                         GameRunning.GetInstance().ResetState();
                         BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
@@ -92,9 +89,10 @@ namespace Breakout.GameStates {
                 }
             }
 
-
-
         }
+        /// <summary>
+        /// Renders the acquired buttons and backgroundimage for GameOver.
+        /// </summary>
         public void RenderState() {
             this.backGroundImage.RenderEntity();
             foreach (Text elem in menuButtons) {
@@ -102,15 +100,9 @@ namespace Breakout.GameStates {
 
             }
 
-            //Render "TitleImage.png" - Image for menu 
-            //Render buttons 
-            //the selected menu button should be indicated by the color of the text (a menu button should be of the type DIKUArcade.Graphics.Text) and there should be the two 
-            //buttons New Game and Quit.
-
         }
         public void ResetState() {
-            instance = null;
-            menuButtons = new Text[] { };
+
         }
         public void UpdateState() {
 

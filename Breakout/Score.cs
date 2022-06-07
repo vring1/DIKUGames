@@ -7,10 +7,8 @@ using System.IO;
 using DIKUArcade.Physics;
 using System.Security.Principal;
 using System.Collections.Generic;
-//using DIKUArcade.EventBus;
 using DIKUArcade.Events;
 using DIKUArcade.GUI;
-//using DIKUArcade;
 
 namespace Breakout {
 
@@ -28,25 +26,42 @@ namespace Breakout {
             display = new Text(count.ToString(), position, extent);
             display.SetColor(System.Drawing.Color.White);
         }
+        /// <summary>
+        /// Increments the count.
+        /// </summary>
         public void AddPoints() {
             count++;
         }
+        /// <summary>
+        /// Returns the instance field of the Score class.
+        /// </summary>
+        /// <returns>the instance of Score.</returns>
         public static Score GetInstance() {
             return instance;
         }
-
+        /// <summary>
+        /// Decrements the count.
+        /// </summary>
         public void DecreasePoints() {
             if (count > 0) {
                 count--;
             }
         }
+        /// <summary>
+        /// Renders the score to the screen.
+        /// </summary>
         public void RenderScore() {
             display.RenderText();
         }
-
+        /// <summary>
+        /// Updates the score each frame.
+        /// </summary>
         public void UpdateScore() {
             display.SetText(count.ToString());
         }
+        /// <summary>
+        /// Resets the score to it's default value.
+        /// </summary>
         public void ResetScore() {
             this.count = 0;
         }
