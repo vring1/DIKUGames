@@ -43,6 +43,12 @@ public class BallTest {
     }
 
     [Test]
+    public void SwitchDirectionTest() {
+        ball.MoveBall();
+        Assert.IsTrue(ball.IsThisBallDeleted());
+    }
+
+    [Test]
     public void VerticalDirectionBallTest() {
         float posY = ball.GetPositionY();
         float posX = ball.GetPositionX();

@@ -62,6 +62,7 @@ public class LevelLoader {
         legend = legend.Split("Legend/", StringSplitOptions.None)[0];
         legendStringArray = legend.Split("\n", StringSplitOptions.RemoveEmptyEntries);
         MakeDictionary(metaDict);
+        MakeDictionaryTime(metaTimeDict);
     }
     /// <summary>
     /// returns the field which was filled in FileToString().
@@ -103,6 +104,15 @@ public class LevelLoader {
             metaDict.Add(tempString[0], tempString[1][0].ToString());
         }
     }
+
+    public void MakeDictionaryTime(Dictionary<string, string> dictT) {
+        timer = BreakoutTimer.GetInstance();
+        metaTimeDict.Clear();
+        for (int j = 1; j < metaStringArray.Length; j++) {
+            string[] tempString = metaStringArray[j].Split(": ", StringSplitOptions.RemoveEmptyEntries);
+            metaTimeDict.Add(tempString[0], tempString[1].ToString());
+        }
+    }
     /// <summary>
     /// Adds blocks to a EntityContainer given a filepath.
     /// </summary>
@@ -114,7 +124,7 @@ public class LevelLoader {
 
             FileToString(path);
              if(metaString.Contains("Time")){
-                        int time = Int32.Parse(metaDict["Time"]);
+                        int time = Int32.Parse(metaTimeDict["Time"]);
                         timer.SetBreakoutTimer(time);
                         }
 
