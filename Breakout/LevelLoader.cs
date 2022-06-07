@@ -19,6 +19,7 @@ namespace Breakout;
 public class LevelLoader {
 
     private LevelLoader level;
+    private BreakoutTimer timer;
     private string mapString;
     private string metaString;
     private string[] metaStringArray;
@@ -95,10 +96,11 @@ public class LevelLoader {
     /// </summary>
     /// <param name="dict">the dictionary to be filled</param>
     public void MakeDictionary(Dictionary<string, string> dict) {
+        timer = BreakoutTimer.GetInstance();
         metaDict.Clear();
         for (int j = 1; j < metaStringArray.Length; j++) {
             string[] tempString = metaStringArray[j].Split(": ", StringSplitOptions.RemoveEmptyEntries);
-            metaDict.Add(tempString[0], tempString[1][0].ToString());
+            metaDict.Add(tempString[0], tempString[1].ToString());
         }
     }
     /// <summary>
@@ -111,7 +113,10 @@ public class LevelLoader {
         if (File.Exists(path) && fileExt == ".txt") {
 
             FileToString(path);
-
+             if(metaString.Contains("Time")){
+                        int time = Int32.Parse(metaDict["Time"]);
+                        timer.SetBreakoutTimer(time);
+                        }
 
             float xPos = -(2 / 12f);
             float yPos = (24 / 24f);

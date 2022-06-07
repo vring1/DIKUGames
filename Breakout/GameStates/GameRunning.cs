@@ -27,9 +27,12 @@ namespace Breakout.GameStates {
 
         private CollisionDetect collisionDetection;
 
+        private BreakoutTimer timerGame;
+
         public GameRunning() {
             score = Score.GetInstance();
             life = Life.GetInstance();
+            timerGame = BreakoutTimer.GetInstance();
         }
         /// <summary> 
         /// Creates an instance of GameRunning if it doesn't already exit 
@@ -53,6 +56,7 @@ namespace Breakout.GameStates {
             ballContainer.RenderEntities();
             score.RenderScore();
             life.RenderLife();
+            timerGame.RenderTimer();
         }
         /// <summary>
         /// Resets the state of GameRunning.
@@ -72,6 +76,7 @@ namespace Breakout.GameStates {
             player.Move();
             score.UpdateScore();
             life.UpdateLife();
+            timerGame.UpdateTimer();
             if (life.LifeIsZero()) {
                 BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
