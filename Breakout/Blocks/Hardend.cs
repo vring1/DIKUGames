@@ -14,6 +14,9 @@ using System;
 
 
 namespace Breakout {
+    /// <summary>
+    /// A hardened block.
+    /// </summary>
     public class Hardened : Block {
         Score score;
         private IBaseImage image {

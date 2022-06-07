@@ -13,6 +13,9 @@ using System;
 
 
 namespace Breakout;
+/// <summary>
+/// Used for reading the levelfiles and adding the right blocks to a usable container.
+/// </summary>
 public class LevelLoader {
 
     private LevelLoader level;

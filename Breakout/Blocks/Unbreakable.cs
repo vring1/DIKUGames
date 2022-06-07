@@ -13,6 +13,9 @@ using DIKUArcade.Events;
 using System;
 
 namespace Breakout {
+    /// <summary>
+    /// A block that is unbreakable.
+    /// </summary>
 
     public class Unbreakable : Block {
 

@@ -13,6 +13,9 @@ using System;
 using Breakout.GameStates;
 
 namespace Breakout;
+/// <summary>
+/// Game has control over the game loop and the window in general and what's being updated,rendered etc.
+/// </summary>
 public class Game : DIKUGame, IGameEventProcessor {
     private GameEventBus eventBus;
     private StateMachine stateMachine;

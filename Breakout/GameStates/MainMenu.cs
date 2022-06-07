@@ -11,6 +11,9 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates {
+    /// <summary>
+    /// A state for when the game is launched.
+    /// </summary>
     public class MainMenu : IGameState {
         private static MainMenu? instance = null;
         private Entity backGroundImage;

@@ -11,6 +11,9 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates {
+    /// <summary>
+    /// A state for when the game has ended.
+    /// </summary>
     public class GameOver : IGameState {
         private static GameOver? instance = null;
         private Entity backGroundImage;

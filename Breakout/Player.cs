@@ -10,6 +10,9 @@ using DIKUArcade.Events;
 using DIKUArcade.GUI;
 
 namespace Breakout {
+    /// <summary>
+    /// The player controlled by the user in the game.
+    /// </summary>
     public class Player : IGameEventProcessor {
 
         private static Player instance = new Player(

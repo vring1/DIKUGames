@@ -11,6 +11,9 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates {
+    /// <summary>
+    /// A state for when the game is paused.
+    /// </summary>
     public class GamePaused : IGameState {
         private static GamePaused? instance = null;
         private Entity backGroundImage;

@@ -10,6 +10,9 @@ using DIKUArcade.Events;
 using DIKUArcade.Physics;
 
 namespace Breakout {
+    /// <summary>
+    /// The ball for the game.
+    /// </summary>
     public class Ball : Entity {
         public DynamicShape shape;
         private Entity entity;

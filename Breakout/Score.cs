@@ -11,7 +11,9 @@ using DIKUArcade.Events;
 using DIKUArcade.GUI;
 
 namespace Breakout {
-
+    /// <summary>
+    /// Is used for keeping track at the score in the game.
+    /// </summary>
     public class Score {
         private static Score instance = new Score(new Vec2F(0.9f, 0.5f), new Vec2F(0.45f, 0.45f));
         private int count;

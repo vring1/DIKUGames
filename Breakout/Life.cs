@@ -13,7 +13,9 @@ using DIKUArcade.GUI;
 //using DIKUArcade;
 
 namespace Breakout {
-
+    /// <summary>
+    /// The life of the player.
+    /// </summary>
     public class Life {
         private static Life instance = new Life(new Vec2F(0.1f, 0.5f), new Vec2F(0.45f, 0.45f));
         private int count;

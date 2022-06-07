@@ -13,7 +13,9 @@ using DIKUArcade.Events;
 using System;
 
 namespace Breakout {
-
+    /// <summary>
+    /// Abstract class that the different blocks should inherit from.
+    /// </summary>
     public abstract class Block : Entity {
         public Block(Vec2F Position, IBaseImage Image, int HP) : base(new StationaryShape(Position, new Vec2F(0.083f, 0.04f)), Image) {
         }

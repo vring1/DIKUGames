@@ -13,6 +13,9 @@ using System;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates;
+/// <summary>
+/// Controls the state flow and switches between states.
+/// </summary>
 public class StateMachine : IGameEventProcessor {
     public IGameState ActiveState {
         get; private set;

@@ -13,7 +13,9 @@ using DIKUArcade.Events;
 using System;
 
 namespace Breakout {
-
+    /// <summary>
+    /// A block that invokes powerups.
+    /// </summary>
     public class PowerupBlock : Block {
         Score score;
         private IBaseImage image {

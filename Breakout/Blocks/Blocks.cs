@@ -14,7 +14,9 @@ using System;
 using Breakout.GameStates;
 
 namespace Breakout {
-
+    /// <summary>
+    /// The basic block.
+    /// </summary>
     public class Blocks : Block {
         private Score score;
         private IBaseImage image {

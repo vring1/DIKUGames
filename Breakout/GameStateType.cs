@@ -10,14 +10,18 @@ using System.Collections.Generic;
 using DIKUArcade.Events;
 using DIKUArcade.GUI;
 namespace Breakout;
-
+/// <summary>
+/// The different states of the game.
+/// </summary>
 public enum GameStateType {
     GAME_RUNNING,
     GAME_PAUSED,
     MAIN_MENU,
     GAME_OVER
 }
-
+/// <summary>
+/// Transforms the states.
+/// </summary>
 public class StateTransformer {
     /// <summary>
     /// Transforms a string into it's corresponding GameStateType.

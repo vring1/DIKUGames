@@ -11,6 +11,9 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 
 namespace Breakout.GameStates {
+    /// <summary>
+    /// A state for when the game is running.
+    /// </summary>
     public class GameRunning : IGameState {
         private Player player;
         private static GameRunning instance = null;

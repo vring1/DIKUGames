@@ -14,6 +14,9 @@ using System.Timers;
 using System.Diagnostics;
 
 namespace Breakout {
+    /// <summary>
+    /// Handles collisions.
+    /// </summary>
     public class CollisionDetect {
         private Life life;
         /// <summary>
