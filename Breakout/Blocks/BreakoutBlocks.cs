@@ -31,7 +31,7 @@ namespace Breakout {
         /// <summary>
         /// Deletes the block.
         /// </summary>
-        public abstract void DeleteBlock();
+        public abstract void DeleteBlock(EntityContainer<PowerUpDrops> powerUpDropsContainer) ;
         /// <summary>
         /// Renders the block.
         /// </summary>

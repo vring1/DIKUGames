@@ -19,6 +19,8 @@ namespace Breakout {
     /// </summary>
     public class CollisionDetect {
         private Life life;
+        private PowerUpAbillties PowerUpColl;
+        
         /// <summary>
         /// Detects the ball collides with anything.
         /// </summary>
@@ -27,8 +29,9 @@ namespace Breakout {
         /// <param name="ball">the ball which collides with the other parameters</param>
         /// <param name="blockContainer">the container with blocks</param>
         /// <param name="pos">The position of the ball(s)</param>
-        public void BallDetec(EntityContainer<Ball> ballContainer, Player player, Ball ball,
-            EntityContainer<Block> blockContainer, Vec2F pos) {
+        public void BallDetec(EntityContainer<Ball> ballContainer, Player player, Ball ball, Life life,
+            EntityContainer<Block> blockContainer, EntityContainer<PowerUpDrops> powerUpDropsContainer, Vec2F pos) {
+            PowerUpColl = new PowerUpAbillties();
             ballContainer.Iterate(ballz => {
                 ballz.shape.Move();
                 if (ballz.Shape.Position.Y < 0) {
@@ -63,23 +66,27 @@ namespace Breakout {
                         if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
-                            block.DeleteBlock();
+                            block.DeleteBlock(powerUpDropsContainer);
+                            
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirUp) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
-                            block.DeleteBlock();
+                            block.DeleteBlock(powerUpDropsContainer);
+                            
 
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirLeft) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
-                            block.DeleteBlock();
+                            block.DeleteBlock(powerUpDropsContainer);
+                            
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirRight) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
-                            block.DeleteBlock();
+                            block.DeleteBlock(powerUpDropsContainer);
+                            
 
 
                         }
@@ -88,11 +95,17 @@ namespace Breakout {
                 }
             });
             if (ballContainer.CountEntities() <= 0) {
-                life = Life.GetInstance();
-                life.DecreaseLife();
-                ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(player.Shape.AsDynamicShape().Position.X + 0.06f,
-                player.Shape.AsDynamicShape().Position.Y + 0.03f), new Vec2F(0.03f, 0.03f)),
-                new Image(Path.Combine("Assets", "Images", "ball.png"))));
+                if (PowerUpColl.isInvincible = true)
+                    ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(player.Shape.AsDynamicShape().Position.X + 0.06f,
+                    player.Shape.AsDynamicShape().Position.Y + 0.03f), new Vec2F(0.03f, 0.03f)),
+                    new Image(Path.Combine("Assets", "Images", "ball.png"))));
+
+                else
+                    life = Life.GetInstance();
+                    life.DecreaseLife();
+                    ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(player.Shape.AsDynamicShape().Position.X + 0.06f,
+                    player.Shape.AsDynamicShape().Position.Y + 0.03f), new Vec2F(0.03f, 0.03f)),
+                    new Image(Path.Combine("Assets", "Images", "ball.png"))));
             }
         }
 

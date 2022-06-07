@@ -24,10 +24,12 @@ namespace Breakout.GameStates {
         private int ballCount;
         private LevelLoader level;
         private EntityContainer<Block> blockContainer;
+        private EntityContainer<PowerUpDrops> powerUpDropsContainer;
 
         private CollisionDetect collisionDetection;
 
         private BreakoutTimer timerGame;
+        private PowerUpAbillties powerUpAbillties;
 
         public GameRunning() {
             score = Score.GetInstance();
@@ -57,6 +59,7 @@ namespace Breakout.GameStates {
             score.RenderScore();
             life.RenderLife();
             timerGame.RenderTimer();
+            powerUpDropsContainer.RenderEntities();
         }
         /// <summary>
         /// Resets the state of GameRunning.
@@ -72,11 +75,13 @@ namespace Breakout.GameStates {
         /// </summary>
         public void UpdateState() {
             ball.MoveBall();
-            collisionDetection.BallDetec(ballContainer, player, ball, blockContainer, new Vec2F(player.GetPositionX(), 0.2f));
+            collisionDetection.BallDetec(ballContainer, player, ball, life, blockContainer, powerUpDropsContainer, new Vec2F(player.GetPositionX(), 0.2f));
             player.Move();
             score.UpdateScore();
             life.UpdateLife();
             timerGame.UpdateTimer();
+            powerUpDropsContainer.RenderEntities();
+            powerUpAbillties.Iterate(powerUpDropsContainer,ballContainer,ball,life,score,player,ballCount);
             if (life.LifeIsZero()) {
                 BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
@@ -119,9 +124,11 @@ namespace Breakout.GameStates {
         /// Initializes the state of GameRunning.
         /// </summary>
         public void InitializeGameState() {
+            powerUpAbillties = new PowerUpAbillties();
             player = Player.GetInstance();
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
+            powerUpDropsContainer = new EntityContainer<PowerUpDrops> ();
             blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
             ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),

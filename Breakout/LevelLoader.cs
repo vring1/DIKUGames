@@ -100,7 +100,7 @@ public class LevelLoader {
         metaDict.Clear();
         for (int j = 1; j < metaStringArray.Length; j++) {
             string[] tempString = metaStringArray[j].Split(": ", StringSplitOptions.RemoveEmptyEntries);
-            metaDict.Add(tempString[0], tempString[1].ToString());
+            metaDict.Add(tempString[0], tempString[1][0].ToString());
         }
     }
     /// <summary>
@@ -142,6 +142,7 @@ public class LevelLoader {
                         DamagedImageFile = imageFile.Remove(imageFile.Length - 4, 4) + "-damaged.png";
                         bool Unbreakable = false;
                         bool Hardened = false;
+                        bool PowerUp = false;
 
 
                         foreach (KeyValuePair<string, string> kvp in metaDict) {
@@ -152,6 +153,9 @@ public class LevelLoader {
                                 }
                                 if (kvp.Key == "Hardened") {
                                     Hardened = true;
+                                }
+                                if (kvp.Key == "PowerUp") {
+                                    PowerUp = true;
                                 }
                             }
                         }
@@ -167,6 +171,12 @@ public class LevelLoader {
                                                     (new Vec2F(xPos, yPos),
                                                     new Image(Path.Combine
                                                     ("Assets", "Images", imageFile)), new Image(Path.Combine("Assets", "Images", DamagedImageFile)), 1));
+                        }else if (PowerUp) {
+                            blockContainer.AddEntity(new PowerupBlock
+                                                    (new Vec2F(xPos, yPos),
+                                                    new Image(Path.Combine
+                                                    ("Assets", "Images", imageFile)), new Image(Path.Combine("Assets", "Images", DamagedImageFile)), 1));
+
                         } else {
                             blockContainer.AddEntity(new Blocks
                                                     (new Vec2F(xPos, yPos),

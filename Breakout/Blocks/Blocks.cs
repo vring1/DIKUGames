@@ -75,7 +75,7 @@ namespace Breakout {
         /// <summary>
         /// Deletes the block.
         /// </summary>
-        public override void DeleteBlock() {
+        public override void DeleteBlock(EntityContainer<PowerUpDrops> powerUpDropsContainer)  {
             if (HP <= 0) {
                 DeleteEntity();
                 score.AddPoints();

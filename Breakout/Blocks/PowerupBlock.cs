@@ -17,7 +17,8 @@ namespace Breakout {
     /// A block that invokes powerups.
     /// </summary>
     public class PowerupBlock : Block {
-        Score score;
+        public Score score;
+        private PowerUpAbillties powerupDrop;
         private IBaseImage image {
             get; set;
         }
@@ -73,10 +74,12 @@ namespace Breakout {
         /// <summary>
         /// Deletes the block.
         /// </summary>
-        public override void DeleteBlock() {
+        public override void DeleteBlock(EntityContainer<PowerUpDrops> powerUpDropsContainer)  {
+            powerupDrop = new PowerUpAbillties();
             if (HP <= 0) {
                 DeleteEntity();
                 score.AddPoints();
+                powerupDrop.DropPowerUp(powerUpDropsContainer,new Vec2F(shape.Position.X,shape.Position.Y));
             }
         }
         /// <summary>
