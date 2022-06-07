@@ -15,7 +15,7 @@ using System;
 namespace Breakout {
 
     public class PowerupBlock : Block {
-
+        Score score;
         private IBaseImage image {
             get; set;
         }
@@ -37,6 +37,7 @@ namespace Breakout {
             this.HP = HP;
             image = Image;
             AltImage = altImage;
+            score = Score.GetInstance();
         }
         public float GetThisPositionX() {
             return shape.Position.X;
@@ -46,16 +47,19 @@ namespace Breakout {
             return shape.Position.Y;
         }
         public override bool isUnbreakable() {
-            return true;
+            return false;
         }
 
         public override void isHit() {
-            HP = HP;
+            if (HP > 0) {
+                HP = HP - 1;
+            }
         }
 
         public override void DeleteBlock() {
             if (HP <= 0) {
                 DeleteEntity();
+                score.AddPoints();
             }
         }
 

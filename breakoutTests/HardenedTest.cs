@@ -57,4 +57,11 @@ public class HardenedTest {
         block.DeleteBlock();
         Assert.False(block.IsDeleted());
     }
+    [Test]
+    public void HPWillAlwaysBePositiveTest() {
+        block.isHit();
+        block.isHit();
+        block.isHit();
+        Assert.AreEqual(block.HP, 0);
+    }
 }

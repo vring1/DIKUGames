@@ -48,6 +48,8 @@ public class PowerUpTest {
     [Test]
     public void DeleteBlockTest() {
         block.isHit();
+        block.isHit();
+        block.isHit();
         block.DeleteBlock();
         Assert.True(block.IsDeleted());
     }
@@ -55,5 +57,12 @@ public class PowerUpTest {
     public void BlockIsOnlyDeletedWhenHpIs0Test() {
         block.DeleteBlock();
         Assert.False(block.IsDeleted());
+    }
+    [Test]
+    public void HPWillAlwaysBePositiveTest() {
+        block.isHit();
+        block.isHit();
+        block.isHit();
+        Assert.AreEqual(block.HP, 0);
     }
 }

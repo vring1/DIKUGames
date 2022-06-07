@@ -53,7 +53,9 @@ namespace Breakout {
         }
 
         public override void isHit() {
-            HP = HP - 1;
+            if (HP > 0) {
+                HP = HP - 1;
+            }
         }
 
         public override void DeleteBlock() {
