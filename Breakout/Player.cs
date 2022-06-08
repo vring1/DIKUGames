@@ -28,6 +28,7 @@ namespace Breakout {
                 return shape;
             }
         }
+        private PowerUpAbillties PowerUpInfinite;
 
         private Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
@@ -122,6 +123,7 @@ namespace Breakout {
         /// </summary>
         /// <param name="gameEvent"> a specfic registered GameEvent</param>
         public void ProcessEvent(GameEvent gameEvent) {
+            PowerUpInfinite = new PowerUpAbillties();
 
             if (gameEvent.EventType == GameEventType.InputEvent) {
                 switch (gameEvent.Message) {
@@ -136,6 +138,12 @@ namespace Breakout {
                         break;
                     case "Release_Right":
                         this.SetMoveRight(false);
+                        break;
+                    case "Release_Space":
+                        if (PowerUpInfinite.isInfinite = true)
+                            ballContainer.AddEntity(new Ball(new DynamicShape(new Vec2F(player.Shape.AsDynamicShape().Position.X + 0.06f,
+                            player.Shape.AsDynamicShape().Position.Y + 0.03f), new Vec2F(0.03f, 0.03f)),
+                            new Image(Path.Combine("Assets", "Images", "ball.png"))));
                         break;
                     default:
                         break;
