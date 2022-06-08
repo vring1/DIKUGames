@@ -28,6 +28,7 @@ namespace Breakout {
         /// <param name="player">the player instance</param>
         /// <param name="ball">the ball which collides with the other parameters</param>
         /// <param name="blockContainer">the container with blocks</param>
+        /// <param name="powerUpDropsContainer">The container holding the dropped powerups</param>
         /// <param name="pos">The position of the ball(s)</param>
         public void BallDetec(EntityContainer<Ball> ballContainer, Player player, Ball ball, Life life,
             EntityContainer<Block> blockContainer, EntityContainer<PowerUpDrops> powerUpDropsContainer, Vec2F pos) {

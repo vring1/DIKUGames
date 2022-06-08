@@ -105,6 +105,10 @@ public class LevelLoader {
         }
     }
 
+    /// <summary>
+    /// Fills a dictionary with corresponding data, with the purpos of time.
+    /// </summary>
+    /// <param name="dictT">the dictionary to be filled</param>
     public void MakeDictionaryTime(Dictionary<string, string> dictT) {
         timer = BreakoutTimer.GetInstance();
         metaTimeDict.Clear();

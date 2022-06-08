@@ -25,10 +25,20 @@ private Text display;
 
 private int moreTime = 15;
 
-private int count = 0;
-public int currint;
+
+private int currint;
 public int currTimer;
 public int gameTime;
+
+        /// <summary>
+        /// Keeps time for the game.
+        /// </summary>
+        /// <param name="instance"> The instance of the timer</param>
+        /// <param name="breakoutStaticTimer">A static timer counting up</param>
+        /// <param name="gameTime">The total amount of time for a level</param>
+        /// <param name="currTimer">The current timer</param>
+        /// <param name="moreTime">Holds a value of 15 seconds</param>
+        /// <param name="currint">The timers time in seconds</param>
 
 private static BreakoutTimer instance = new BreakoutTimer(new Vec2F(0.5f, 0.5f), new Vec2F(0.45f, 0.45f));
 
