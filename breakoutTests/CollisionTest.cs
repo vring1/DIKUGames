@@ -32,7 +32,7 @@ public class CollisionTest {
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         lifeTest = Life.GetInstance();
-        powerUpDropsContainerTest = new EntityContainer<PowerUpDrops> ();
+        powerUpDropsContainerTest = new EntityContainer<PowerUpDrops>();
         player = Player.GetInstance();
         ball = new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.8f), new Vec2F(0.0f, 0.03f)),
@@ -46,7 +46,7 @@ public class CollisionTest {
                             ("Assets", "Images", "grey-block.png")), new Image(Path.Combine("Assets", "Images", "grey-block.png")), 1));
     }
 
-    
+
 
     [Test]
     public void TestTopColl() {
@@ -55,10 +55,10 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.95f), new Vec2F(0.0f, -0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             ball.MoveBall();
         }
-        collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+        collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
         Assert.AreNotEqual(blockContainer, TestContainer);
     }
 
@@ -69,10 +69,10 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.5f), new Vec2F(0.0f, 0.03f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             ball.MoveBall();
         }
-        collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+        collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
         Assert.AreNotEqual(blockContainer, TestContainer);
     }
 
@@ -83,10 +83,10 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.1f, 0.8f), new Vec2F(0.03f, 0.0f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             ball.MoveBall();
         }
-        collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+        collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
         Assert.AreNotEqual(blockContainer, TestContainer);
     }
 
@@ -97,10 +97,10 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.8f, 0.8f), new Vec2F(-0.03f, 0.0f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             ball.MoveBall();
         }
-        collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+        collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
         Assert.AreNotEqual(blockContainer, TestContainer);
     }
 
@@ -114,9 +114,9 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.3f), new Vec2F(0.0f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 50; i ++){
+        for (int i = 0; i < 50; i++) {
             ballTest.MoveBall();
-            collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+            collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
         }
         Assert.IsTrue(ballTest.GetPositionY() > 0.3f);
     }
@@ -131,9 +131,9 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.3f), new Vec2F(0.0f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 30; i ++){
+        for (int i = 0; i < 30; i++) {
             ballTest.MoveBall();
-            collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+            collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
             System.Console.WriteLine(ballTest.GetPositionX());
         }
         Assert.IsTrue(ballTest.GetPositionX() > 0.5f);
@@ -149,9 +149,9 @@ public class CollisionTest {
         ballContainer.AddEntity(new Ball(
                 new DynamicShape(new Vec2F(0.45f, 0.3f), new Vec2F(0.0f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))));
-        for(int i = 0 ; i < 30; i ++){
+        for (int i = 0; i < 30; i++) {
             ballTest.MoveBall();
-            collisionDetection.BallDetec(ballContainer, player, ball,lifeTest, blockContainer,powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
+            collisionDetection.BallDetec(ballContainer, player, ball, lifeTest, blockContainer, powerUpDropsContainerTest, new Vec2F(player.GetPositionX(), 0.2f));
             System.Console.WriteLine(ballTest.GetPositionX());
         }
         Assert.IsTrue(ballTest.GetPositionX() < 0.4f);

@@ -81,7 +81,7 @@ namespace Breakout.GameStates {
             life.UpdateLife();
             timerGame.UpdateTimer();
             powerUpDropsContainer.RenderEntities();
-            powerUpAbillties.Iterate(powerUpDropsContainer,ballContainer,ball,life,score,player,ballCount);
+            powerUpAbillties.Iterate(powerUpDropsContainer, ballContainer, ball, life, score, player, ballCount);
             if (life.LifeIsZero()) {
                 BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent {
@@ -128,7 +128,7 @@ namespace Breakout.GameStates {
             player = Player.GetInstance();
             collisionDetection = new CollisionDetect();
             level = new LevelLoader();
-            powerUpDropsContainer = new EntityContainer<PowerUpDrops> ();
+            powerUpDropsContainer = new EntityContainer<PowerUpDrops>();
             blockContainer = level.AddBlocks(@"Assets/Levels/level1.txt");
             ball = new Ball(
                 new DynamicShape(new Vec2F(0.485f, 0.1275f), new Vec2F(0.03f, 0.03f)),

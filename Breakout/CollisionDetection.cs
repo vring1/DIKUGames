@@ -20,7 +20,7 @@ namespace Breakout {
     public class CollisionDetect {
         private Life life;
         private PowerUpAbillties PowerUpColl;
-        
+
         /// <summary>
         /// Detects the ball collides with anything.
         /// </summary>
@@ -68,26 +68,26 @@ namespace Breakout {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
                             block.DeleteBlock(powerUpDropsContainer);
-                            
+
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirUp) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X, ballz.Shape.AsDynamicShape().Direction.Y * -1));
                             block.DeleteBlock(powerUpDropsContainer);
-                            
+
 
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirLeft) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
                             block.DeleteBlock(powerUpDropsContainer);
-                            
+
 
                         } else if (CollisionDetection.Aabb(ballz.Shape.AsDynamicShape(), block.Shape).CollisionDir == CollisionDirection.CollisionDirRight) {
                             block.isHit();
                             ballz.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ballz.Shape.AsDynamicShape().Direction.X * -1, ballz.Shape.AsDynamicShape().Direction.Y));
                             block.DeleteBlock(powerUpDropsContainer);
-                            
+
 
 
                         }

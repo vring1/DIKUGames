@@ -74,12 +74,12 @@ namespace Breakout {
         /// <summary>
         /// Deletes the block.
         /// </summary>
-        public override void DeleteBlock(EntityContainer<PowerUpDrops> powerUpDropsContainer)  {
+        public override void DeleteBlock(EntityContainer<PowerUpDrops> powerUpDropsContainer) {
             powerupDrop = new PowerUpAbillties();
             if (HP <= 0) {
                 DeleteEntity();
                 score.AddPoints();
-                powerupDrop.DropPowerUp(powerUpDropsContainer,new Vec2F(shape.Position.X,shape.Position.Y));
+                powerupDrop.DropPowerUp(powerUpDropsContainer, new Vec2F(shape.Position.X, shape.Position.Y));
             }
         }
         /// <summary>

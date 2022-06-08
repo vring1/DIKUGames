@@ -31,52 +31,52 @@ public class BreakoutTimerTest {
 
     [Test]
     public void TestSetTimer() {
-    timerTest.SetBreakoutTimer(100);
-    Assert.AreEqual(timerTest.gameTime, 100);
-        
+        timerTest.SetBreakoutTimer(100);
+        Assert.AreEqual(timerTest.gameTime, 100);
+
     }
 
     [Test]
     public void TestConutTimer() {
-    
-    timerTest.SetBreakoutTimer(100);
-    for(int i = 0; i < 2; i++){
-        timerTest.CountTimer(timerTest.gameTime);
-        System.Threading.Thread.Sleep(1000);
-    }
-    Assert.AreEqual(timerTest.currTimer, 99);
-        
+
+        timerTest.SetBreakoutTimer(100);
+        for (int i = 0; i < 2; i++) {
+            timerTest.CountTimer(timerTest.gameTime);
+            System.Threading.Thread.Sleep(1000);
+        }
+        Assert.AreEqual(timerTest.currTimer, 99);
+
     }
 
     [Test]
     public void TestTimerRunOutTrue() {
-    timerTest.SetBreakoutTimer(1);
-    for(int i = 0; i < 2; i++){
-        timerTest.CountTimer(timerTest.gameTime);
-        System.Threading.Thread.Sleep(1000);
-    }
-    System.Console.WriteLine(timerTest.currTimer);
-    Assert.IsTrue(timerTest.TimerRunOut());
-        
+        timerTest.SetBreakoutTimer(1);
+        for (int i = 0; i < 2; i++) {
+            timerTest.CountTimer(timerTest.gameTime);
+            System.Threading.Thread.Sleep(1000);
+        }
+        System.Console.WriteLine(timerTest.currTimer);
+        Assert.IsTrue(timerTest.TimerRunOut());
+
     }
 
     [Test]
     public void TestTimerRunOutFalse() {
-    timerTest.SetBreakoutTimer(10);
-    for(int i = 0; i < 2; i++){
-        timerTest.CountTimer(timerTest.gameTime);
-        System.Threading.Thread.Sleep(1000);
-    }
-    System.Console.WriteLine(timerTest.currTimer);
-    Assert.IsFalse(timerTest.TimerRunOut());
-        
+        timerTest.SetBreakoutTimer(10);
+        for (int i = 0; i < 2; i++) {
+            timerTest.CountTimer(timerTest.gameTime);
+            System.Threading.Thread.Sleep(1000);
+        }
+        System.Console.WriteLine(timerTest.currTimer);
+        Assert.IsFalse(timerTest.TimerRunOut());
+
     }
 
     [Test]
     public void TestTimerAddTime() {
-    timerTest.SetBreakoutTimer(10);
-    timerTest.AddMoreTimePowerUp();
-    Assert.AreEqual(timerTest.currTimer, 25);
-        
+        timerTest.SetBreakoutTimer(10);
+        timerTest.AddMoreTimePowerUp();
+        Assert.AreEqual(timerTest.currTimer, 25);
+
     }
 }

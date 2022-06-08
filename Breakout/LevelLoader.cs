@@ -127,10 +127,10 @@ public class LevelLoader {
         if (File.Exists(path) && fileExt == ".txt") {
 
             FileToString(path);
-             if(metaString.Contains("Time")){
-                        int time = Int32.Parse(metaTimeDict["Time"]);
-                        timer.SetBreakoutTimer(time);
-                        }
+            if (metaString.Contains("Time")) {
+                int time = Int32.Parse(metaTimeDict["Time"]);
+                timer.SetBreakoutTimer(time);
+            }
 
             float xPos = -(2 / 12f);
             float yPos = (24 / 24f);
@@ -185,7 +185,7 @@ public class LevelLoader {
                                                     (new Vec2F(xPos, yPos),
                                                     new Image(Path.Combine
                                                     ("Assets", "Images", imageFile)), new Image(Path.Combine("Assets", "Images", DamagedImageFile)), 1));
-                        }else if (PowerUp) {
+                        } else if (PowerUp) {
                             blockContainer.AddEntity(new PowerupBlock
                                                     (new Vec2F(xPos, yPos),
                                                     new Image(Path.Combine
