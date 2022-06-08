@@ -18,10 +18,12 @@ namespace breakoutTests;
 
 public class BlockTest {
     private Breakout.Blocks block;
+    private EntityContainer<PowerUpDrops> powerUpDropsContainer;
 
     [SetUp]
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
+        powerUpDropsContainer = new EntityContainer<PowerUpDrops>();
 
         block = (new Blocks
                 (new Vec2F(0.5f, 0.5f),
@@ -48,12 +50,12 @@ public class BlockTest {
     [Test]
     public void DeleteBlockTest() {
         block.isHit();
-        block.DeleteBlock();
+        block.DeleteBlock(powerUpDropsContainer);
         Assert.True(block.IsDeleted());
     }
     [Test]
     public void BlockIsOnlyDeletedWhenHpIs0Test() {
-        block.DeleteBlock();
+        block.DeleteBlock(powerUpDropsContainer);
         Assert.False(block.IsDeleted());
     }
     [Test]

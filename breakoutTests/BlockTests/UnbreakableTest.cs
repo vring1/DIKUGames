@@ -18,10 +18,12 @@ namespace breakoutTests;
 
 public class UnbreakableTest {
     private Breakout.Unbreakable block;
+    private EntityContainer<PowerUpDrops> powerUpDropsContainer;
 
     [SetUp]
     public void Setup() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
+        powerUpDropsContainer = new EntityContainer<PowerUpDrops>();
 
         block = (new Unbreakable
                 (new Vec2F(0.5f, 0.5f),
@@ -53,7 +55,7 @@ public class UnbreakableTest {
         block.isHit();
         block.isHit();
         block.isHit();
-        block.DeleteBlock();
+        block.DeleteBlock(powerUpDropsContainer);
         Assert.False(block.IsDeleted());
     }
     [Test]

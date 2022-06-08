@@ -93,7 +93,7 @@ namespace Breakout
             int timer = Convert.ToInt32(DIKUArcade.Timers.StaticTimer.GetElapsedSeconds());
             while (timer <= 0);
                isInfinite = true;
-            Infinite = false;
+            isInfinite = false;
         }
 
 
