@@ -1,5 +1,3 @@
 # DIKUGames
-Repo for solving assignments with DIKUArcade for DIKU course Software Development
+Galaga and Breakout developed in C# with reference to course NDAB15011U Software Development (SU) at University of Copenhagen.
 
-To start working on the assignments, create a **fork** of this repository
-and follow the instructions in the assignment description.
